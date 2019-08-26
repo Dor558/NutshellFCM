@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.dorbrauner.firebasenotifications">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.dorbrauner.firebasenotifications">
 
     <application android:allowBackup="true"
                  android:label="@string/app_name"
@@ -10,7 +11,7 @@
                  android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
 
 
-        <activity android:name="com.dorbrauner.example_app.MainActivity">
+        <activity android:name="com.dorbrauner.example_app.ExampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

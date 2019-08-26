@@ -17,7 +17,7 @@ class ExampleNotificationFactory(private val application: Application) : Notific
                     contentIntent = PendingIntent.getActivity(
                         application,
                         0,
-                        Intent(application, MainActivity::class.java),
+                        Intent(application, ExampleActivity::class.java),
                         PendingIntent.FLAG_UPDATE_CURRENT
                     ),
                     contentTitle = "notification type 1",
@@ -37,7 +37,7 @@ class ExampleNotificationFactory(private val application: Application) : Notific
                     contentIntent = PendingIntent.getActivity(
                         application,
                         0,
-                        Intent(application, MainActivity::class.java),
+                        Intent(application, ExampleActivity::class.java),
                         PendingIntent.FLAG_UPDATE_CURRENT
                     ),
                     contentTitle = "notification type 2",

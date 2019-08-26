@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dorbrauner.firebasenotifications.R
 
 
-class MainActivity : AppCompatActivity() {
+class ExampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity_layout)
+        setContentView(R.layout.example_activity_layout)
     }
 
 }
