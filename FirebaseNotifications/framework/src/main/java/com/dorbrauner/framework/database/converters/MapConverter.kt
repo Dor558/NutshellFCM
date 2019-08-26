@@ -1,4 +1,4 @@
-package com.here.driverapp.notifications.framework
+package com.dorbrauner.framework.database.converters
 
 import androidx.room.TypeConverter
 import com.google.common.reflect.TypeToken

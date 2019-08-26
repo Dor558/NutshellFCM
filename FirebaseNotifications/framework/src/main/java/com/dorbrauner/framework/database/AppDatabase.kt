@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.dorbrauner.framework.database.converters.DateTimeConverter
-import com.here.driverapp.notifications.framework.MapConverter
+import com.dorbrauner.framework.database.converters.MapConverter
 import com.dorbrauner.framework.NotificationsFrameworkContract
 import com.dorbrauner.framework.database.model.NotificationMessageDao
 
