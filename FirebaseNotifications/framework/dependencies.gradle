@@ -47,5 +47,5 @@ dependencies {
 
     implementation "com.google.code.gson:gson:$gson_version"
 
-    implementation "joda-time:joda-time:$joda_version"
+    api "joda-time:joda-time:$joda_version"
 }

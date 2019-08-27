@@ -12,7 +12,7 @@ class SilentNotificationHandleService: JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
         val actionId = intent.extras?.getString(NotificationsFrameworkContract.KEY_ACTION_ID)
-            ?: throw NotificationsFrameworkContract.Error.UnknownNotificationIdThrowable(null)
+            ?: throw NotificationsFrameworkContract.Error.UnknownNotificationActionIdThrowable(null)
         notificationsConsumer.consume(actionId)
     }
 

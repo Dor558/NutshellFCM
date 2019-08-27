@@ -8,9 +8,11 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.room.*
 import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
+import com.dorbrauner.framework.application.ForegroundService
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.joda.time.DateTime
+import kotlin.reflect.KClass
 
 interface NotificationsFrameworkContract {
 
@@ -18,7 +20,7 @@ interface NotificationsFrameworkContract {
         const val KEY_ACTION_ID = "action_id"
         const val KEY_TIMESTAMP = "timestamp"
         const val KEY_PAYLOAD = "payload"
-        const val KEY_IS_SILENT = "silent"
+        const val KEY_TYPE = "type"
         const val ACTION_BROADCAST_REGISTRATION_NOTIFICATION = "ACTION_BROADCAST_REGISTRATION_NOTIFICATION"
     }
 
@@ -35,8 +37,8 @@ interface NotificationsFrameworkContract {
         fun notifyMessage(notificationMessage: NotificationMessage)
     }
 
-    interface NotificationsMessageReceiver {
-        fun onNotificationsMessageReceived(intent: Intent)
+    interface NotificationsMessageRouter {
+        fun onRouteNotificationsMessage(intent: Intent)
     }
 
     interface Repository : NotificationMessageReader {
@@ -46,21 +48,21 @@ interface NotificationsFrameworkContract {
         @Entity(tableName = Sources.PersistentSource.ROOM_TABLE_NOTIFICATION_MESSAGE)
         data class NotificationMessage(
 
-                @PrimaryKey(autoGenerate = false)
-                @ColumnInfo(name = KEY_ACTION_ID)
-                val actionId: String,
+            @PrimaryKey(autoGenerate = false)
+            @ColumnInfo(name = KEY_ACTION_ID)
+            val actionId: String,
 
-                @ColumnInfo(name = KEY_TIMESTAMP)
-                val timeStamp: DateTime = DateTime(),
+            @ColumnInfo(name = KEY_TYPE)
+            val type: NotificationType = NotificationType.NOTIFICATION,
 
-                @ColumnInfo(name = KEY_IS_SILENT)
-                val isSilent: Boolean = false,
+            @ColumnInfo(name = KEY_PAYLOAD)
+            val payload: Map<String, String> = mapOf(KEY_ACTION_ID to actionId),
 
-                @ColumnInfo(name = KEY_PAYLOAD)
-                val payload: Map<String, String> = emptyMap()
+            @ColumnInfo(name = KEY_TIMESTAMP)
+            val timeStamp: DateTime = DateTime()
         ) {
             @Ignore
-            val notificationId  = actionId.hashCode()
+            val notificationId = actionId.hashCode()
         }
     }
 
@@ -112,13 +114,16 @@ interface NotificationsFrameworkContract {
         }
 
         interface Case {
-            fun consume(notificationMessages: List<NotificationMessage>): List<NotificationMessage>
+
+            val actionIds: List<String>
+
+            fun consume(caseMessages: List<NotificationMessage>)
         }
     }
 
     interface NotificationsConsumer {
         fun consume(actionId: String)
-        fun consumeAll()
+        fun consumeNotificationsMessages()
     }
 
     interface AndroidNotificationsManager {
@@ -130,8 +135,13 @@ interface NotificationsFrameworkContract {
         fun create(notificationMessage: NotificationMessage): AndroidNotification
     }
 
+    interface ForegroundServicesBinder {
+        fun bind(actionId: String) : Class<*>?
+    }
+
     interface AndroidNotificationBuilder {
         fun build(notificationMessage: NotificationMessage)
+        fun buildForeground(notificationMessage: NotificationMessage)
     }
 
     interface NotificationReceiversRegisterer {
@@ -173,14 +183,26 @@ interface NotificationsFrameworkContract {
     }
 
     data class NotificationChannel(
-            val id: String,
-            val channelName: String,
-            val soundUri: Uri?
+        val id: String,
+        val channelName: String,
+        val soundUri: Uri?
     )
 
+    enum class NotificationType(val value: String) {
+        NOTIFICATION("notification"),
+        SILENT_NOTIFICATION("silent"),
+        FOREGROUND_NOTIFICATION("foreground");
 
-    sealed class Error(msg: String): Throwable(msg) {
-        data class UnknownNotificationIdThrowable(val actionId: String? = null): Error("Unknown action id $actionId")
+        companion object {
+            fun NotificationType(value: String): NotificationType = values().find { it.value == value } ?: NOTIFICATION
+
+        }
+    }
+
+
+    sealed class Error(msg: String) : Throwable(msg) {
+        data class UnknownNotificationActionIdThrowable(val actionId: String? = null) : Error("Unknown action id $actionId")
+        data class UnknownServiceBindActionIdThrowable(val actionId: String? = null) : kotlin.Error("Unknown foreground service bind for action id $actionId")
     }
 }
 

@@ -1,16 +1,17 @@
 package com.dorbrauner.example_app
 
 import android.app.Application
-import com.dorbrauner.framework.FirebaseLoader
+import com.dorbrauner.framework.FirebaseEngine
 
 
 class ExampleApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        FirebaseLoader.load(this,
+        FirebaseEngine.start(this,
                             ExampleNotificationFactory(this),
-                            ExampleCaseProvider())
+                            ExampleCaseProvider(),
+                            ExampleForegroundServicesBinder())
     }
 
 }

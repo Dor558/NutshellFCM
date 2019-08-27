@@ -12,8 +12,8 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.dorbrauner.framework.extensions.toBundle
 
-open class AndroidNotificationsManager(private val notificationManager: NotificationManager,
-                                  private val importanceTranslator: NotificationsFrameworkContract.Translators.ImportanceTranslator
+internal class AndroidNotificationsManager(private val notificationManager: NotificationManager,
+                                                private val importanceTranslator: NotificationsFrameworkContract.Translators.ImportanceTranslator
 )
     : NotificationsFrameworkContract.AndroidNotificationsManager {
 

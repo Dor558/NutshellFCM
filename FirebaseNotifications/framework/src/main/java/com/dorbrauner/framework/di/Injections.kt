@@ -52,10 +52,12 @@ internal object Injections {
         return NotificationCasesManager(casesProvider)
     }
 
-    fun provideNotificationsConsumer(notificationManager: NotificationManager,
+    fun provideNotificationsConsumer(applicationContext: ApplicationContext,
+                                     notificationManager: NotificationManager,
+                                     foregroundServicesBinder: NotificationsFrameworkContract.ForegroundServicesBinder,
                                      notificationsRepository: NotificationsFrameworkContract.Repository,
                                      casesManager: NotificationsFrameworkContract.NotificationsHandling.CasesManager): NotificationsFrameworkContract.NotificationsConsumer {
-        return NotificationsConsumer(notificationManager, notificationsRepository, casesManager)
+        return NotificationsConsumer(applicationContext, notificationManager, notificationsRepository, foregroundServicesBinder, casesManager)
     }
 
     fun provideNotificationReceiversRegisterer(applicationLifeCycleWrapper: ApplicationLifeCycleWrapper,
@@ -65,15 +67,16 @@ internal object Injections {
     }
 
     fun provideNotificationBuilder(applicationContext: ApplicationContext,
+                                   foregroundServicesBinder: NotificationsFrameworkContract.ForegroundServicesBinder,
                                    androidNotificationsManager: NotificationsFrameworkContract.AndroidNotificationsManager,
                                    notificationsFactory: NotificationsFrameworkContract.AndroidNotificationsFactory): NotificationsFrameworkContract.AndroidNotificationBuilder {
-        return AndroidNotificationBuilder(applicationContext, androidNotificationsManager, notificationsFactory)
+        return AndroidNotificationBuilder(applicationContext, foregroundServicesBinder, androidNotificationsManager, notificationsFactory)
     }
 
     fun provideNotificationsMessageReceiver(applicationContext: ApplicationContext,
                                             notificationsRepository: NotificationsFrameworkContract.Repository,
-                                            notificationBuilder: NotificationsFrameworkContract.AndroidNotificationBuilder): NotificationsFrameworkContract.NotificationsMessageReceiver {
-        return NotificationsMessageReceiver(applicationContext, notificationsRepository, notificationBuilder)
+                                            notificationBuilder: NotificationsFrameworkContract.AndroidNotificationBuilder): NotificationsFrameworkContract.NotificationsMessageRouter {
+        return NotificationsMessageRouter(applicationContext, notificationsRepository, notificationBuilder)
     }
 
     fun provideImpotenceTranslator(): NotificationsFrameworkContract.Translators.ImportanceTranslator {

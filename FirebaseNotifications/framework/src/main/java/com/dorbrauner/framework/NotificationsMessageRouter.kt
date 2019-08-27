@@ -9,23 +9,28 @@ import com.dorbrauner.framework.extensions.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 
-internal class NotificationsMessageReceiver(
+internal class NotificationsMessageRouter(
     private val applicationContext: ApplicationContext,
     private val notificationsRepository: NotificationsFrameworkContract.Repository,
     private val androidNotificationBuilder: NotificationsFrameworkContract.AndroidNotificationBuilder
-) : NotificationsFrameworkContract.NotificationsMessageReceiver {
+) : NotificationsFrameworkContract.NotificationsMessageRouter {
 
-    override fun onNotificationsMessageReceived(intent: Intent) {
+    override fun onRouteNotificationsMessage(intent: Intent) {
         val actionId = intent.extras?.getString(NotificationsFrameworkContract.KEY_ACTION_ID)
-            ?: throw NotificationsFrameworkContract.Error.UnknownNotificationIdThrowable(null)
+            ?: throw NotificationsFrameworkContract.Error.UnknownNotificationActionIdThrowable(null)
 
         notificationsRepository
             .read(actionId)
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = { notificationMessage ->
-                    when (notificationMessage.isSilent) {
-                        true -> {
+                    when (notificationMessage.type) {
+
+                        NotificationsFrameworkContract.NotificationType.NOTIFICATION -> {
+                            androidNotificationBuilder.build(notificationMessage)
+                        }
+
+                        NotificationsFrameworkContract.NotificationType.SILENT_NOTIFICATION -> {
                             JobIntentService.enqueueWork(
                                 applicationContext.get(),
                                 SilentNotificationHandleService::class.java,
@@ -34,13 +39,13 @@ internal class NotificationsMessageReceiver(
                             )
                         }
 
-                        false -> {
-                            androidNotificationBuilder.build(notificationMessage)
+                        NotificationsFrameworkContract.NotificationType.FOREGROUND_NOTIFICATION -> {
+                            androidNotificationBuilder.buildForeground(notificationMessage)
                         }
                     }
                 },
                 onError = {
-                    Log.e(TAG,"Failed to read notification message", it)
+                    Log.e(TAG, "Failed to read notification message", it)
                 }
             )
     }

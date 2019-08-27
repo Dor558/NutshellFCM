@@ -15,8 +15,8 @@ import io.reactivex.subjects.Subject
 /**
  * Error handling
  *
- * subscribeBy - must consumeAll error
- * subscribeIgnoreError - ignored error, use with care, if you want to consumeAll an error later better implement subscribeBy and mark onError as a TODO\n
+ * subscribeBy - must consumeNotificationsMessages error
+ * subscribeIgnoreError - ignored error, use with care, if you want to consumeNotificationsMessages an error later better implement subscribeBy and mark onError as a TODO\n
  * subscribeNoErrorExpected - this event source should not throw an error (i.e. behaviour subject, wrapSafly), method will crash when an error occurs
  */
 fun <T> Observable<T>.subscribeBy(onError: (Throwable) -> Unit, onComplete: () -> Unit = {}, onNext: (T) -> Unit = {}) =

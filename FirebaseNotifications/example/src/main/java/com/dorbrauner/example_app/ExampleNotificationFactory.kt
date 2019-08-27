@@ -50,6 +50,46 @@ class ExampleNotificationFactory(private val application: Application) : Notific
                 )
             }
 
+            "Action 3" -> {
+                NotificationsFrameworkContract.AndroidNotification(
+                    id = notificationMessage.notificationId,
+                    payload = notificationMessage.payload,
+                    contentIntent = PendingIntent.getActivity(
+                        application,
+                        0,
+                        Intent(application, ExampleActivity::class.java),
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                    ),
+                    contentTitle = "notification type 3",
+                    contentText = "This is an example content",
+                    importance = NotificationsFrameworkContract.Importance.HIGH,
+                    smallIcon = android.R.drawable.gallery_thumb,
+                    channel = NotificationsFrameworkContract.NotificationChannel("example channel id",
+                        "example channel",
+                        null)
+                )
+            }
+
+            "Action 4" -> {
+                NotificationsFrameworkContract.AndroidNotification(
+                    id = notificationMessage.notificationId,
+                    payload = notificationMessage.payload,
+                    contentIntent = PendingIntent.getActivity(
+                        application,
+                        0,
+                        Intent(application, ExampleActivity::class.java),
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                    ),
+                    contentTitle = "notification type 4 (foreground)",
+                    contentText = "This is an example content",
+                    importance = NotificationsFrameworkContract.Importance.HIGH,
+                    smallIcon = android.R.drawable.gallery_thumb,
+                    channel = NotificationsFrameworkContract.NotificationChannel("example channel id",
+                        "example channel",
+                        null)
+                )
+            }
+
             else -> {
                 throw Throwable("Unsupported notification id")
             }

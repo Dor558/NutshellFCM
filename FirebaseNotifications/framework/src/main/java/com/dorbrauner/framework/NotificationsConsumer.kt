@@ -1,15 +1,20 @@
 package com.dorbrauner.framework
 
 import android.app.NotificationManager
+import android.content.Intent
 import android.util.Log
+import com.dorbrauner.framework.NotificationsFrameworkContract.Error.*
+import com.dorbrauner.framework.application.contexts.ApplicationContext
 import com.dorbrauner.framework.extensions.TAG
 import com.dorbrauner.framework.extensions.subscribeBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 
 internal class NotificationsConsumer(
-    private val notificationManager: NotificationManager,
+    private val applicationContext: ApplicationContext,
+    private val systemNotificationManager: NotificationManager,
     private val notificationsRepository: NotificationsFrameworkContract.Repository,
+    private val foregroundServicesBinder: NotificationsFrameworkContract.ForegroundServicesBinder,
     private val casesManager: NotificationsFrameworkContract.NotificationsHandling.CasesManager
 ) : NotificationsFrameworkContract.NotificationsConsumer {
 
@@ -33,16 +38,21 @@ internal class NotificationsConsumer(
             )
     }
 
-    override fun consumeAll() {
+    override fun consumeNotificationsMessages() {
         notificationsRepository.read()
             .doOnSubscribe {
                 casesManager.init()
             }
             .map { notificationMessages ->
-                consumeRecursive(notificationMessages)
-            }.flatMapCompletable {
-                notificationsRepository.purge()
+                notificationMessages.filter { it.type == NotificationsFrameworkContract.NotificationType.NOTIFICATION }
             }
+            .map { notificationMessages ->
+                consumeRecursive(notificationMessages)
+                notificationMessages
+            }.map { notificationMessages ->
+                notificationMessages.forEach { notificationsRepository.remove(it.actionId) }
+            }
+            .ignoreElement()
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onComplete = {
@@ -61,8 +71,18 @@ internal class NotificationsConsumer(
 
         val consumedNotifications = casesManager.handleNextCase(notificationMessages)
         consumedNotifications.forEach { notificationMessage ->
-            notificationsRepository.remove(notificationMessage.actionId)
-            notificationManager.cancel(notificationMessage.notificationId)
+            when (notificationMessage.type) {
+                NotificationsFrameworkContract.NotificationType.FOREGROUND_NOTIFICATION -> {
+                    applicationContext.get().stopService(Intent(
+                        applicationContext.get(),
+                        foregroundServicesBinder.bind(notificationMessage.actionId) ?: throw UnknownServiceBindActionIdThrowable(notificationMessage.actionId)
+                    ))
+                }
+
+                else -> {
+                    systemNotificationManager.cancel(notificationMessage.notificationId)
+                }
+            }
         }
 
         consumeRecursive(notificationMessages - consumedNotifications)
