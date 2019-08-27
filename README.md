@@ -7,15 +7,10 @@ Notifications framework allow you to focus on what to do with notification data 
 moreover, its suggest a solid solution to how an activity should process the notification and whether or not notification 
 should be displayed to the user.
 
-## Gradle
-```
-compile 'com.dorbrauner.notifications.framework:notifications-framework:1.4'
-```
-
 ## Usage
-1) Make your activity implement NotificationContract.NotificationsListener 
-2) Receive the notifications data via onNotificationReceived
-3) Consume the notification by calling consume
+1) Easy integrate firebase notifications to you app
+2) Ability to have custom android notifications in a nutshell
+3) Ability to use custom silent notifications
 ![alt tag](https://i.imgur.com/hctuZib.png)
 
 4) Bonus, you can build foreground notification via androidNotificaitonBuilder
@@ -24,6 +19,11 @@ compile 'com.dorbrauner.notifications.framework:notifications-framework:1.4'
 
 # How-to
 1) Add the depnedency to you project
+## Gradle
+```
+compile 'com.dorbrauner.framework:firebaseFramework:0.1
+```
+
 2) Use the firebase wizard to integrate with firebase and generate the firebase services json file
 -Tools-> Firebase -> Cloud messaging -> set up Cloud Messgeing ->  Connect to Firebase && Add FCM to your App
 ![alt tag](https://i.imgur.com/yMWh5zB.png)
@@ -33,13 +33,22 @@ compile 'com.dorbrauner.notifications.framework:notifications-framework:1.4'
 
 3) Add the below lines to your manifest
 ```
-<service android:name="com.dorbrauner.notifications.framework.FirebaseService"/>
-<service android:name="com.dorbrauner.notifications.framework.NotificationBuilderService"/>
-<service android:name="com.dorbrauner.notifications.framework.MessageToNotificationService"/>
-<receiver android:name="com.dorbrauner.notifications.framework.NotificationApplicationReceiver"/>
+       <service android:name="com.dorbrauner.framework.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+                android:name="com.dorbrauner.framework.SilentNotificationHandleService"
+                android:exported="false"
+                android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service android:name="com.dorbrauner.framework.NotificationDismissService" />
+
 ```
-4) Create your android notification creator
+4) Create your android notification factory
 ![alt tag](https://i.imgur.com/hdkOMsP.png)
-5) Call NotificationFramework.Build your application class and init it like the follow
+5) Create your cases provider
 ![alt tag](https://i.imgur.com/dou35ux.png)
 6) Optional, You can extend from android notification builder to build your own notifications style if required
