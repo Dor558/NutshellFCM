@@ -40,16 +40,18 @@ buildscript {
 
     ext {
         bintrayRepo = 'dorrepo'
-        bintrayName = 'firebaseframework'
+        bintrayName = 'nutshellfirebase'
 
-        publishedGroupId = 'com.dorbrauner.framework'
-        libraryName = 'FirebaseFramework'
-        artifact = 'firebaseFramework'
+        publishedGroupId = 'com.dorbrauner.nutshellfirebase'
+        libraryName = 'NutshellFirebase'
+        artifact = 'nutshellFirebase'
 
-        libraryDescription = 'Wrapper class to easily integrate data firebase notifications'
+        libraryDescription = 'NutshellFirebase allow you to quickly integrate firebase notifications into your project, saving you alot of boilplate code required in order to have them run.\n' +
+                '\n' +
+                'NutshellFirebase allow you to focus on what to do with notification data instead of how to get the notification data. moreover, its suggest a solid solution to how an activity should process the notification and whether or not notification should be displayed to the user.'
 
-        siteUrl = 'https://github.com/Dor558/firebase-notifications'
-        gitUrl = 'https://github.com/Dor558/firebase-notifications.git'
+        siteUrl = 'https://github.com/Dor558/NutshellFirebase'
+        gitUrl = 'https://github.com/Dor558/NutshellFirebase.git'
 
         libraryVersion = '0.1'
 

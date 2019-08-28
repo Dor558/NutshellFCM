@@ -1,9 +1,9 @@
 package com.dorbrauner.example_app
 
-import com.dorbrauner.framework.NotificationsFrameworkContract
+import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
 
 
-class ExampleForegroundServicesBinder : NotificationsFrameworkContract.ForegroundServicesBinder {
+class ExampleForegroundServicesBinder : NutshellFirebaseContract.ForegroundServicesBinder {
 
     override fun bind(actionId: String): Class<*>? {
         return when (actionId) {

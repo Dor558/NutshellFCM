@@ -24,7 +24,7 @@
         <service android:name="com.dorbrauner.example_app.ExampleForegroundService"/>
 
 
-        <service android:name="com.dorbrauner.framework.NutshellFirebaseMessagingService">
+        <service android:name=".NutshellFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

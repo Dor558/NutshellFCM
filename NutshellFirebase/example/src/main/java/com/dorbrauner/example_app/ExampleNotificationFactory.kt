@@ -3,16 +3,16 @@ package com.dorbrauner.example_app
 import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
-import com.dorbrauner.framework.NotificationsFrameworkContract
-import com.dorbrauner.framework.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
+import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
 
 
-class ExampleNotificationFactory(private val application: Application) : NotificationsFrameworkContract.AndroidNotificationsFactory {
+class ExampleNotificationFactory(private val application: Application) : NutshellFirebaseContract.AndroidNotificationsFactory {
 
-    override fun create(notificationMessage: NotificationMessage): NotificationsFrameworkContract.AndroidNotification {
+    override fun create(notificationMessage: NotificationMessage): NutshellFirebaseContract.AndroidNotification {
         return when (notificationMessage.actionId) {
             "Action 1" -> {
-                NotificationsFrameworkContract.AndroidNotification(
+                NutshellFirebaseContract.AndroidNotification(
                     id = notificationMessage.notificationId,
                     payload = notificationMessage.payload,
                     contentIntent = PendingIntent.getActivity(
@@ -23,16 +23,16 @@ class ExampleNotificationFactory(private val application: Application) : Notific
                     ),
                     contentTitle = "notification type 1",
                     contentText = "This is an example content",
-                    importance = NotificationsFrameworkContract.Importance.HIGH,
+                    importance = NutshellFirebaseContract.Importance.HIGH,
                     smallIcon = android.R.drawable.gallery_thumb,
-                    channel = NotificationsFrameworkContract.NotificationChannel("example channel id",
+                    channel = NutshellFirebaseContract.NotificationChannel("example channel id",
                         "example channel",
                         null)
                 )
             }
 
             "Action 2" -> {
-                NotificationsFrameworkContract.AndroidNotification(
+                NutshellFirebaseContract.AndroidNotification(
                     id = notificationMessage.notificationId,
                     payload = notificationMessage.payload,
                     contentIntent = PendingIntent.getActivity(
@@ -43,16 +43,16 @@ class ExampleNotificationFactory(private val application: Application) : Notific
                     ),
                     contentTitle = "notification type 2",
                     contentText = "This is an example content",
-                    importance = NotificationsFrameworkContract.Importance.HIGH,
+                    importance = NutshellFirebaseContract.Importance.HIGH,
                     smallIcon = android.R.drawable.gallery_thumb,
-                    channel = NotificationsFrameworkContract.NotificationChannel("example channel id",
+                    channel = NutshellFirebaseContract.NotificationChannel("example channel id",
                         "example channel",
                         null)
                 )
             }
 
             "Action 3" -> {
-                NotificationsFrameworkContract.AndroidNotification(
+                NutshellFirebaseContract.AndroidNotification(
                     id = notificationMessage.notificationId,
                     payload = notificationMessage.payload,
                     contentIntent = PendingIntent.getActivity(
@@ -63,16 +63,16 @@ class ExampleNotificationFactory(private val application: Application) : Notific
                     ),
                     contentTitle = "notification type 3",
                     contentText = "This is an example content",
-                    importance = NotificationsFrameworkContract.Importance.HIGH,
+                    importance = NutshellFirebaseContract.Importance.HIGH,
                     smallIcon = android.R.drawable.gallery_thumb,
-                    channel = NotificationsFrameworkContract.NotificationChannel("example channel id",
+                    channel = NutshellFirebaseContract.NotificationChannel("example channel id",
                         "example channel",
                         null)
                 )
             }
 
             "Action 4" -> {
-                NotificationsFrameworkContract.AndroidNotification(
+                NutshellFirebaseContract.AndroidNotification(
                     id = notificationMessage.notificationId,
                     payload = notificationMessage.payload,
                     contentIntent = PendingIntent.getActivity(
@@ -83,9 +83,9 @@ class ExampleNotificationFactory(private val application: Application) : Notific
                     ),
                     contentTitle = "notification type 4 (foreground)",
                     contentText = "This is an example content",
-                    importance = NotificationsFrameworkContract.Importance.HIGH,
+                    importance = NutshellFirebaseContract.Importance.HIGH,
                     smallIcon = android.R.drawable.gallery_thumb,
-                    channel = NotificationsFrameworkContract.NotificationChannel("example channel id",
+                    channel = NutshellFirebaseContract.NotificationChannel("example channel id",
                         "example channel",
                         null)
                 )

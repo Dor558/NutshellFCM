@@ -1,7 +1,7 @@
 package com.dorbrauner.example_app
 
 import android.app.Application
-import com.dorbrauner.framework.NutshellFirebase
+import com.dorbrauner.nutshellfirebase.NutshellFirebase
 
 
 class ExampleApplication : Application() {

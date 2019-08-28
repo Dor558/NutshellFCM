@@ -3,7 +3,7 @@ package com.dorbrauner.example_app
 import android.content.Intent
 import android.os.Bundle
 import android.os.IBinder
-import com.dorbrauner.framework.application.ForegroundService
+import com.dorbrauner.nutshellfirebase.application.ForegroundService
 
 
 class ExampleForegroundService : ForegroundService() {

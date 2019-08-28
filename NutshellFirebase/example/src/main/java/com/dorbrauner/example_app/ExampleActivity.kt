@@ -3,9 +3,9 @@ package com.dorbrauner.example_app
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dorbrauner.nutshellfirebase.R
-import com.dorbrauner.framework.LocalMessagesNotifier
-import com.dorbrauner.framework.NotificationsFrameworkContract.*
-import com.dorbrauner.framework.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.LocalMessagesNotifier
+import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.*
+import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
 
 
 class ExampleActivity : AppCompatActivity() {
