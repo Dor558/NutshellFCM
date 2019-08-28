@@ -27,7 +27,7 @@ compile 'com.dorbrauner.nutshellfirebase:nutshellFirebase:0.1'
 ![alt tag](https://i.imgur.com/ze0gq47.png)
 ![alt tag](https://i.imgur.com/pPBTYmQ.png)
 
-3) 
+3) Add the below lines to your application onCreate method
 ```    
       NutshellFirebaseEngine.start(this,
                             ExampleNotificationFactory(this),
