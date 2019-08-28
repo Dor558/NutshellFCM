@@ -33,7 +33,7 @@ compile 'com.dorbrauner.nutshellfirebase:framework:0.1'
 
 4) Add the below lines to your manifest
 ```
-         <service android:name=".NutshellFirebaseMessagingService">
+         <service android:name="com.dorbrauner.nutshellfirebase.NutshellFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
