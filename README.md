@@ -106,6 +106,7 @@ LocalMessagesNotifier.notify(
             NotificationMessage(
                [Notification action id as it is defined in your android notifications factory],
                [choose between = [NOTIFICATION|FOREGROUND_NOTIFICATION|SILENT_NOTIFICATION]
+                  ..//add your notification payload here...
             )
         )
 ```
