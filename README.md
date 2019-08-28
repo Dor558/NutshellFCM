@@ -1,4 +1,4 @@
-![alt tag](https://imgur.com/8WhCFvw)
+![alt tag](https://i.imgur.com/8WhCFvw.jpg)
 
 # NutshellFirebase
 
