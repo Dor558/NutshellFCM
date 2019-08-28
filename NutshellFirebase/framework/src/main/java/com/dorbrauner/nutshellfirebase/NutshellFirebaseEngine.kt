@@ -7,7 +7,7 @@ import com.dorbrauner.nutshellfirebase.extensions.TAG
 import com.google.firebase.iid.FirebaseInstanceId
 
 
-object NutshellFirebase {
+object NutshellFirebaseEngine {
 
     var isInitialized = false
     private set

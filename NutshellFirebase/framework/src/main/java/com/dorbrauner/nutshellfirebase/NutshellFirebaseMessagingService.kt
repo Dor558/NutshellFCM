@@ -39,6 +39,6 @@ open class NutshellFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(firebaseToken: String) {
         super.onNewToken(firebaseToken)
         Log.d(TAG, "FirebaseToken = $firebaseToken")
-        NutshellFirebase.firebaseToken = firebaseToken
+        NutshellFirebaseEngine.firebaseToken = firebaseToken
     }
 }
