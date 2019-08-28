@@ -12,9 +12,9 @@ should be displayed to the user.
 *Please note that NutshellFirebase intent to work with data notification only.
 
 # Highlights
-- Allow to have custom android notifications in a nutshell
-- Allow to use custom silent notifications
-- Allow to start foreground services via push
+- Allow to have custom android notifications in a nutshell.
+- Allow to use custom silent notifications.
+- Allow to start foreground services via push.
 
 # How-to
 1) Add the depnedency to you project
@@ -31,28 +31,21 @@ compile 'com.dorbrauner.framework:firebaseFramework:0.1
 
 3) 
 ```    
- FirebaseEngine.start(this,
-                      ExampleNotificationFactory(this),
-                      ExampleCaseProvider(),
-                      ExampleForegroundServicesBinder())
+   NutshellFirebase.start(this,
+                            ExampleNotificationFactory(this),
+                            ExampleCaseProvider(),
+                            ExampleForegroundServicesBinder())
 ```
 
 4) Add the below lines to your manifest
 ```
-       <service android:name="com.dorbrauner.framework.FirebaseMessagingService">
+      <service android:name="com.dorbrauner.framework.NutshellFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-                android:name="com.dorbrauner.framework.SilentNotificationHandleService"
-                android:exported="false"
-                android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service android:name="com.dorbrauner.framework.NotificationDismissService" />
-
 ```
+
 5) Create your android notification factory
 ```
 class ExampleNotificationFactory(private val application: Application) : NotificationsFrameworkContract.AndroidNotificationsFactory {
