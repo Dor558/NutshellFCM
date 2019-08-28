@@ -95,6 +95,7 @@ Send notification remotely:
    "data":{  
       "action_id":"[Notification action id as it is defined in your android notifications factory]",
       "type": "[choose between = [notification|foreground|silent]]"
+      ..//add your notification payload here...
    }
 }
 ```
