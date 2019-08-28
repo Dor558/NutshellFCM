@@ -28,10 +28,11 @@ compile 'com.dorbrauner.framework:firebaseFramework:0.1
 ![alt tag](https://i.imgur.com/pPBTYmQ.png)
 
 3) 
-```     FirebaseEngine.start(this,
-                            ExampleNotificationFactory(this),
-                            ExampleCaseProvider(),
-                            ExampleForegroundServicesBinder())
+```    
+ FirebaseEngine.start(this,
+                      ExampleNotificationFactory(this),
+                      ExampleCaseProvider(),
+                      ExampleForegroundServicesBinder())
 ```
 
 4) Add the below lines to your manifest
