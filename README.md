@@ -29,7 +29,7 @@ compile 'com.dorbrauner.nutshellfirebase:nutshellFirebase:0.1'
 
 3) 
 ```    
-   NutshellFirebase.start(this,
+      NutshellFirebaseEngine.start(this,
                             ExampleNotificationFactory(this),
                             ExampleCaseProvider(),
                             ExampleForegroundServicesBinder())
@@ -37,21 +37,22 @@ compile 'com.dorbrauner.nutshellfirebase:nutshellFirebase:0.1'
 
 4) Add the below lines to your manifest
 ```
-      <service android:name="com.dorbrauner.framework.NutshellFirebaseMessagingService">
+         <service android:name=".NutshellFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
 ```
 
 5) Create your android notification factory
 ```
-class ExampleNotificationFactory(private val application: Application) : NotificationsFrameworkContract.AndroidNotificationsFactory {
+class ExampleNotificationFactory(private val application: Application) : NutshellFirebaseContract.AndroidNotificationsFactory {
 
-    override fun create(notificationMessage: NotificationMessage): NotificationsFrameworkContract.AndroidNotification {
+    override fun create(notificationMessage: NotificationMessage): NutshellFirebaseContract.AndroidNotification {
         return when (notificationMessage.actionId) {
             "Some Action Id" -> {
-                NotificationsFrameworkContract.AndroidNotification(
+                NutshellFirebaseContract.AndroidNotification(
                   [Fill your custom notification]
                 )
             }
@@ -65,9 +66,9 @@ class ExampleNotificationFactory(private val application: Application) : Notific
 ```
 6) Optional, Create your cases provider to handle app notifications use cases
 ```
-class ExampleCaseProvider : NotificationsFrameworkContract.NotificationsHandling.CasesProvider {
+class ExampleCaseProvider : NutshellFirebaseContract.NotificationsHandling.CasesProvider {
 
-    override val cases: List<NotificationsFrameworkContract.NotificationsHandling.Case> =
+    override val cases: List<NutshellFirebaseContract.NotificationsHandling.Case> =
         listOf(Action1ExampleCase(), Action2Action3ExampleCase(), Action4ExampleCase())
 }
 ```
