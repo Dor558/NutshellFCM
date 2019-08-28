@@ -1,7 +1,7 @@
 package com.dorbrauner.framework
 
 import com.dorbrauner.framework.NotificationsFrameworkContract.NotificationsHandling.Case
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
+import com.dorbrauner.framework.database.model.NotificationMessage
 
 internal class NotificationCasesManager(private val casesProvider: NotificationsFrameworkContract.NotificationsHandling.CasesProvider):
     NotificationsFrameworkContract.NotificationsHandling.CasesManager {
@@ -24,11 +24,14 @@ internal class NotificationCasesManager(private val casesProvider: Notifications
         return nextCase?.let { case ->
 
             if (case is CleanupCase) {
-                return notifications
+                return notifications //Consume all unhandled notifications
             }
 
             val caseMessages = notifications.filter { case.actionIds.contains(it.actionId) }
-            case.consume(caseMessages)
+            if (caseMessages.isNotEmpty()) {
+                case.consume(caseMessages)
+            }
+
             caseMessages
         } ?: notifications
     }

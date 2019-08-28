@@ -4,12 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.util.Log
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.dorbrauner.framework.extensions.TAG
 import com.dorbrauner.framework.extensions.subscribeBy
 import com.dorbrauner.framework.extensions.toBundle
 import com.dorbrauner.framework.NotificationsFrameworkContract.Companion.ACTION_BROADCAST_REGISTRATION_NOTIFICATION
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
+import com.dorbrauner.framework.database.model.NotificationMessage
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.Executors
 

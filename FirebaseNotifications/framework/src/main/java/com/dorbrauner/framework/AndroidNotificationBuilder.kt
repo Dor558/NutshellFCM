@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.core.os.bundleOf
 import com.dorbrauner.framework.NotificationsFrameworkContract.Error.UnknownServiceBindActionIdThrowable
 import com.dorbrauner.framework.application.contexts.ApplicationContext
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.*
+import com.dorbrauner.framework.database.model.NotificationMessage
 
 
 internal class AndroidNotificationBuilder(

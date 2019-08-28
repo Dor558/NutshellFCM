@@ -1,10 +1,10 @@
-package com.dorbrauner.framework.database.model
+package com.dorbrauner.framework.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
+import com.dorbrauner.framework.database.model.NotificationMessage
 import com.dorbrauner.framework.NotificationsFrameworkContract.Sources.PersistentSource.Companion.ROOM_TABLE_NOTIFICATION_MESSAGE
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -29,4 +29,7 @@ interface NotificationMessageDao {
 
     @Query("DELETE FROM $ROOM_TABLE_NOTIFICATION_MESSAGE WHERE action_id == :id")
     fun deleteByActionId(id: String): Completable
+
+    @Query("DELETE FROM $ROOM_TABLE_NOTIFICATION_MESSAGE WHERE action_id in (:list)")
+    fun deleteGroup(list: List<String>): Completable
 }

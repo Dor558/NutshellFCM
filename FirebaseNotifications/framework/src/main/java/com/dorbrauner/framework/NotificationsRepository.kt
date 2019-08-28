@@ -1,7 +1,7 @@
 package com.dorbrauner.framework
 
 import com.dorbrauner.framework.extensions.subscribeBy
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
+import com.dorbrauner.framework.database.model.NotificationMessage
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -85,6 +85,22 @@ internal class NotificationsRepository(private val notificationsInteractor: Noti
                                 emitter.onError(it)
                             }
                     )
+        }
+    }
+
+    override fun remove(ids: List<String>): Completable {
+        return Completable.create { emitter ->
+            notificationsInteractor
+                .removeNotifications(ids)
+                .subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onComplete = {
+                        emitter.onComplete()
+                    },
+                    onError = {
+                        emitter.onError(it)
+                    }
+                )
         }
     }
 }

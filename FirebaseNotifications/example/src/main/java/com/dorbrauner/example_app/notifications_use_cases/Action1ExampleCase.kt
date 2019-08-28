@@ -1,9 +1,9 @@
 package com.dorbrauner.example_app.notifications_use_cases
 
 import com.dorbrauner.framework.NotificationsFrameworkContract
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
+import com.dorbrauner.framework.database.model.NotificationMessage
 
-class Action1Case : NotificationsFrameworkContract.NotificationsHandling.Case {
+class Action1ExampleCase : NotificationsFrameworkContract.NotificationsHandling.Case {
 
     override val actionIds: List<String> = listOf("Action 1")
 

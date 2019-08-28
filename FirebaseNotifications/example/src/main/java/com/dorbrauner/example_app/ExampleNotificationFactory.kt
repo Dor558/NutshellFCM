@@ -4,11 +4,12 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
 import com.dorbrauner.framework.NotificationsFrameworkContract
+import com.dorbrauner.framework.database.model.NotificationMessage
 
 
 class ExampleNotificationFactory(private val application: Application) : NotificationsFrameworkContract.AndroidNotificationsFactory {
 
-    override fun create(notificationMessage: NotificationsFrameworkContract.Repository.NotificationMessage): NotificationsFrameworkContract.AndroidNotification {
+    override fun create(notificationMessage: NotificationMessage): NotificationsFrameworkContract.AndroidNotification {
         return when (notificationMessage.actionId) {
             "Action 1" -> {
                 NotificationsFrameworkContract.AndroidNotification(

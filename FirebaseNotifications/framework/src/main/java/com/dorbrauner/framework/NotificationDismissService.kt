@@ -11,7 +11,7 @@ internal class NotificationDismissService: IntentService("NotificationDismissSer
 
     override fun onHandleIntent(intent: Intent?) {
         intent?.getStringExtra(KEY_ACTION_ID)?.let { actionId ->
-            Log.i(TAG, "Notification $actionId dismissed")
+            Log.d(TAG, "Notification $actionId dismissed")
         }
     }
 }

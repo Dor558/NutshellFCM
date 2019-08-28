@@ -1,11 +1,12 @@
 package com.dorbrauner.framework
 
+import com.dorbrauner.framework.database.model.NotificationMessage
 import com.dorbrauner.framework.di.FirebaseMessagingComponents
 
 
 object LocalMessagesNotifier {
 
-    fun notify(notificationMessage: NotificationsFrameworkContract.Repository.NotificationMessage) {
+    fun notify(notificationMessage: NotificationMessage) {
         FirebaseMessagingComponents.notificationNotifier.notifyMessage(notificationMessage)
     }
 

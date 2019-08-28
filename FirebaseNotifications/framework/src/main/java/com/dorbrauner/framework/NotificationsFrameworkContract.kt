@@ -6,13 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.room.*
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
-import com.dorbrauner.framework.application.ForegroundService
+import com.dorbrauner.framework.database.model.NotificationMessage
 import io.reactivex.Completable
 import io.reactivex.Single
-import org.joda.time.DateTime
-import kotlin.reflect.KClass
 
 interface NotificationsFrameworkContract {
 
@@ -44,26 +40,8 @@ interface NotificationsFrameworkContract {
     interface Repository : NotificationMessageReader {
         fun purge(): Completable
         fun remove(id: String): Completable
+        fun remove(ids: List<String>): Completable
 
-        @Entity(tableName = Sources.PersistentSource.ROOM_TABLE_NOTIFICATION_MESSAGE)
-        data class NotificationMessage(
-
-            @PrimaryKey(autoGenerate = false)
-            @ColumnInfo(name = KEY_ACTION_ID)
-            val actionId: String,
-
-            @ColumnInfo(name = KEY_TYPE)
-            val type: NotificationType = NotificationType.NOTIFICATION,
-
-            @ColumnInfo(name = KEY_PAYLOAD)
-            val payload: Map<String, String> = mapOf(KEY_ACTION_ID to actionId),
-
-            @ColumnInfo(name = KEY_TIMESTAMP)
-            val timeStamp: DateTime = DateTime()
-        ) {
-            @Ignore
-            val notificationId = actionId.hashCode()
-        }
     }
 
     interface Sources {
@@ -76,6 +54,7 @@ interface NotificationsFrameworkContract {
 
             fun purge(): Completable
             fun remove(id: String): Completable
+            fun remove(ids: List<String>): Completable
             fun read(): Single<List<NotificationMessage>>
             fun read(id: String): Single<NotificationMessage>
             fun write(notificationMessage: NotificationMessage): Completable
@@ -86,6 +65,7 @@ interface NotificationsFrameworkContract {
 
             fun clearCache()
             fun removeFromCache(id: String)
+            fun removeFromCache(ids: List<String>)
             fun readCache(): List<NotificationMessage>?
             fun readCache(id: String): NotificationMessage?
             fun writeCache(notificationMessage: NotificationMessage)
@@ -96,6 +76,7 @@ interface NotificationsFrameworkContract {
 
         fun purgeNotifications(): Completable
         fun removeNotification(id: String): Completable
+        fun removeNotifications(ids: List<String>): Completable
         fun readNotification(id: String): Single<NotificationMessage>
         fun readNotifications(): Single<List<NotificationMessage>>
         fun writeNotification(notificationMessage: NotificationMessage): Completable

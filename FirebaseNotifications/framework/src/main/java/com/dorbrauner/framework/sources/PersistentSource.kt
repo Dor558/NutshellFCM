@@ -1,23 +1,26 @@
 package com.dorbrauner.framework.sources
 
-import com.dorbrauner.framework.database.AppDatabase
+import com.dorbrauner.framework.database.Database
 import com.dorbrauner.framework.NotificationsFrameworkContract
-import com.dorbrauner.framework.database.model.NotificationMessageDao
+import com.dorbrauner.framework.database.dao.NotificationMessageDao
+import com.dorbrauner.framework.database.model.NotificationMessage
 import io.reactivex.Completable
 import io.reactivex.Single
 
 
-internal class PersistentSource(appDatabase: AppDatabase): NotificationsFrameworkContract.Sources.PersistentSource {
+internal class PersistentSource(Database: Database): NotificationsFrameworkContract.Sources.PersistentSource {
 
-    private val dao: NotificationMessageDao = appDatabase.notificationMessageDao()
+    private val dao: NotificationMessageDao = Database.notificationMessageDao()
 
     override fun purge(): Completable = dao.deleteAll()
 
     override fun remove(id: String): Completable = dao.deleteByActionId(id)
 
-    override fun read(): Single<List<NotificationsFrameworkContract.Repository.NotificationMessage>> = dao.getAll()
+    override fun remove(ids: List<String>): Completable = dao.deleteGroup(ids)
 
-    override fun read(id: String): Single<NotificationsFrameworkContract.Repository.NotificationMessage> = dao.getById(id)
+    override fun read(): Single<List<NotificationMessage>> = dao.getAll()
 
-    override fun write(notificationMessage: NotificationsFrameworkContract.Repository.NotificationMessage): Completable = dao.insert(notificationMessage)
+    override fun read(id: String): Single<NotificationMessage> = dao.getById(id)
+
+    override fun write(notificationMessage: NotificationMessage): Completable = dao.insert(notificationMessage)
 }

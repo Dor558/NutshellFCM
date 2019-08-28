@@ -1,7 +1,7 @@
 package com.dorbrauner.example_app.notifications_use_cases
 
 import com.dorbrauner.framework.NotificationsFrameworkContract
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
+import com.dorbrauner.framework.database.model.NotificationMessage
 
 
 class Action2Action3ExampleCase : NotificationsFrameworkContract.NotificationsHandling.Case {

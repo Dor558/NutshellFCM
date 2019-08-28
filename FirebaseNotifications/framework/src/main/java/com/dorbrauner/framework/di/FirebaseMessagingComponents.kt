@@ -2,16 +2,15 @@ package com.dorbrauner.framework.di
 
 import android.app.Application
 import android.app.NotificationManager
-import com.dorbrauner.framework.DefaultForegroundBinder
 import com.dorbrauner.framework.NotificationsReceiversRegisterer
 import com.dorbrauner.framework.application.ApplicationLifeCycleWrapper
-import com.dorbrauner.framework.database.AppDatabase
+import com.dorbrauner.framework.database.Database
 import com.dorbrauner.framework.NotificationsFrameworkContract
 
 
 internal object FirebaseMessagingComponents {
 
-    lateinit var database: AppDatabase
+    lateinit var Database: Database
     lateinit var cacheSource: NotificationsFrameworkContract.Sources.CacheSource
     lateinit var persistentSource: NotificationsFrameworkContract.Sources.PersistentSource
     lateinit var notificationsInteractor: NotificationsFrameworkContract.Interactor
@@ -34,10 +33,10 @@ internal object FirebaseMessagingComponents {
              foregroundServicesBinder: NotificationsFrameworkContract.ForegroundServicesBinder): Boolean {
         val applicationContext = Injections.provideApplicationContext(application)
         androidNotificationsFactory = notificationsFactory
-        database = Injections.provideDatabase(application)
+        Database = Injections.provideDatabase(application)
         systemNotificationManager = Injections.provideNotificationsManager(application)
         cacheSource = Injections.provideCacheSource()
-        persistentSource = Injections.providePersistentSource(database)
+        persistentSource = Injections.providePersistentSource(Database)
         notificationsInteractor = Injections.provideNotificationInteractor(persistentSource, cacheSource)
         notificationsRepository = Injections.provideNotificationRepository(notificationsInteractor)
         importanceTranslator = Injections.provideImpotenceTranslator()

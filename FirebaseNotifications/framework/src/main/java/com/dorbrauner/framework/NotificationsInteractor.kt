@@ -1,5 +1,6 @@
 package com.dorbrauner.framework
 
+import com.dorbrauner.framework.database.model.NotificationMessage
 import com.dorbrauner.framework.extensions.subscribeBy
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -52,7 +53,28 @@ internal class NotificationsInteractor(
         }
     }
 
-    override fun readNotification(id: String): Single<NotificationsFrameworkContract.Repository.NotificationMessage> {
+    override fun removeNotifications(ids: List<String>): Completable {
+        return Completable.create { emitter ->
+            cacheSource.removeFromCache(ids)
+            val disposable = persistentSource.remove(ids)
+                .subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onComplete = {
+                        emitter.onComplete()
+                    },
+                    onError = {
+                        emitter.onError(it)
+                    }
+                )
+
+
+            emitter.setCancellable {
+                disposable.dispose()
+            }
+        }
+    }
+
+    override fun readNotification(id: String): Single<NotificationMessage> {
         return Single.create { emitter ->
             val cacheNotificationMessage = cacheSource.readCache(id)
             if (cacheNotificationMessage != null) {
@@ -77,7 +99,7 @@ internal class NotificationsInteractor(
         }
     }
 
-    override fun readNotifications(): Single<List<NotificationsFrameworkContract.Repository.NotificationMessage>> {
+    override fun readNotifications(): Single<List<NotificationMessage>> {
         return Single.create { emitter ->
             val cacheNotificationMessage = cacheSource.readCache()
             if (!cacheNotificationMessage.isNullOrEmpty()) {
@@ -102,7 +124,7 @@ internal class NotificationsInteractor(
         }
     }
 
-    override fun writeNotification(notificationMessage: NotificationsFrameworkContract.Repository.NotificationMessage): Completable {
+    override fun writeNotification(notificationMessage: NotificationMessage): Completable {
         return Completable.create { emitter ->
             cacheSource.writeCache(notificationMessage)
             val disposable = persistentSource.write(notificationMessage)

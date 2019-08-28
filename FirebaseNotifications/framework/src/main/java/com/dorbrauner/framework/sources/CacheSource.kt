@@ -1,7 +1,7 @@
 package com.dorbrauner.framework.sources
 
 import com.dorbrauner.framework.NotificationsFrameworkContract
-import com.dorbrauner.framework.NotificationsFrameworkContract.Repository.NotificationMessage
+import com.dorbrauner.framework.database.model.NotificationMessage
 
 class CacheSource : NotificationsFrameworkContract.Sources.CacheSource {
 
@@ -14,6 +14,10 @@ class CacheSource : NotificationsFrameworkContract.Sources.CacheSource {
     @Synchronized
     override fun removeFromCache(id: String) {
         map.remove(id)
+    }
+
+    override fun removeFromCache(ids: List<String>) {
+        ids.forEach { map.remove(it) }
     }
 
     @Synchronized

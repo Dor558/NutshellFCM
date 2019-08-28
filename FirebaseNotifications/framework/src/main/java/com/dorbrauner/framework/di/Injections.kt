@@ -7,7 +7,7 @@ import androidx.room.Room
 import com.dorbrauner.framework.*
 import com.dorbrauner.framework.application.ApplicationLifeCycleWrapper
 import com.dorbrauner.framework.application.contexts.ApplicationContext
-import com.dorbrauner.framework.database.AppDatabase
+import com.dorbrauner.framework.database.Database
 import com.dorbrauner.framework.database.DATABASE_NAME
 import com.dorbrauner.framework.ImportanceTranslator
 import com.dorbrauner.framework.NotificationsFrameworkContract
@@ -25,13 +25,13 @@ internal object Injections {
         return application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    fun provideDatabase(application: Application): AppDatabase {
-        return Room.databaseBuilder(application, AppDatabase::class.java, DATABASE_NAME)
+    fun provideDatabase(application: Application): Database {
+        return Room.databaseBuilder(application, Database::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
     }
 
-    fun providePersistentSource(roomDatabase: AppDatabase): NotificationsFrameworkContract.Sources.PersistentSource {
+    fun providePersistentSource(roomDatabase: Database): NotificationsFrameworkContract.Sources.PersistentSource {
         return PersistentSource(roomDatabase)
     }
 
