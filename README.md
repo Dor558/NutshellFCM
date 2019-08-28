@@ -1,4 +1,4 @@
-# NutshellFirebase
+# NutshellFirebase ![alt tag](https://bluemosaicweb.com/wp-content/uploads/2017/12/nutshell.jpg)
 
 NutshellFirebase allow you to quickly integrate firebase notifications into your project, saving you alot of boilplate code 
 required in order to have them run.
