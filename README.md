@@ -18,7 +18,7 @@ should be displayed to the user.
 1) Add the depnedency to you project
 ### Gradle
 ```
-compile 'com.dorbrauner.framework:firebaseFramework:0.1
+compile 'com.dorbrauner.framework:nutshellFirebase:0.1'
 ```
 
 2) Use the firebase wizard to integrate with firebase and generate the firebase services json file
