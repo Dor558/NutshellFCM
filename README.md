@@ -16,7 +16,7 @@ should be displayed to the user.
 
 # How-to
 1) Add the depnedency to you project
-## Gradle
+### Gradle
 ```
 compile 'com.dorbrauner.framework:firebaseFramework:0.1
 ```
