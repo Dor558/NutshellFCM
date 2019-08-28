@@ -31,21 +31,18 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_runtime_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_runtime_version"
 
-    implementation "androidx.room:room-runtime:$room_version"
+    api "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    implementation "androidx.room:room-rxjava2:$room_version"
-    implementation "androidx.room:room-guava:$room_version"
-    implementation "androidx.core:core-ktx:$android_ktx_version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
-
-    implementation "com.google.firebase:firebase-messaging:$firebase_messaging"
-    implementation "com.google.firebase:firebase-config:$firebase_config"
-    implementation "com.google.firebase:firebase-crash:$firebase_crash"
-    implementation "com.google.firebase:firebase-core:$firebase_core"
-
-    implementation "com.google.code.gson:gson:$gson_version"
-
+    api "androidx.room:room-ktx:$room_version"
+    api "androidx.room:room-rxjava2:$room_version"
+    api "androidx.room:room-guava:$room_version"
+    api "androidx.core:core-ktx:$android_ktx_version"
+    api "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+    api "com.google.firebase:firebase-messaging:$firebase_messaging"
+    api "com.google.firebase:firebase-config:$firebase_config"
+    api "com.google.firebase:firebase-crash:$firebase_crash"
+    api "com.google.firebase:firebase-core:$firebase_core"
+    api "com.google.code.gson:gson:$gson_version"
     api "joda-time:joda-time:$joda_version"
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
