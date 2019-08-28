@@ -1,11 +1,7 @@
 # ![alt tag](https://i.imgur.com/8WhCFvw.jpg) ![alt tag](https://i.imgur.com/1dVlVDC.png)  ![alt tag](https://i.imgur.com/UNTyNoE.png) 
 
-NutshellFirebase allow you to quickly integrate firebase notifications into your project, saving you alot of boilplate code 
-that usually required in order to have them run.
-
-NutshellFirebase allow you to focus on what to do with your notification data instead of how and when to retrieve the payload.
-moreover, its suggest a solid solution to how an activity should process the notification and whether or not notification 
-should be displayed to the user.
+NutshellFirebase allows you to quickly integrate firebase notifications into your project, saving you a lot of boilerplate code that is usually required in order to have them run.
+NutshellFirebase allows you to focus on what to do with your notification data instead of how and when to retrieve the payload. moreover, it suggests a solid solution to how an activity should process the notification and whether or not notification should be displayed to the user.
 
 *Please note that NutshellFirebase intent to work with data notification only.
 
