@@ -1,4 +1,4 @@
-![alt tag](https://bluemosaicweb.com/wp-content/uploads/2017/12/nutshell.jpg)
+![alt tag](https://bluemosaicweb.com/wp-content/uploads/2017/12/nutshell.jpg?cropZoom=100,100)
 
 # NutshellFirebase
 
