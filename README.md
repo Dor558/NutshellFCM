@@ -14,7 +14,7 @@ NutshellFirebase allows you to focus on what to do with your notification data i
 1) Add the depnedency to you project
 ### Gradle
 ```
-compile 'com.dorbrauner.nutshellfirebase:nutshellFirebase:0.1'
+compile 'com.dorbrauner.nutshellfirebase:framework:0.1'
 ```
 
 2) Use the firebase wizard to integrate with firebase and generate the firebase services json file
