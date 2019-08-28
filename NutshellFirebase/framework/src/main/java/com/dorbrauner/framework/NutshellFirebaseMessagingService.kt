@@ -12,7 +12,7 @@ import com.dorbrauner.framework.database.model.NotificationMessage
 import org.joda.time.DateTime
 
 
-open class FirebaseMessagingService : FirebaseMessagingService() {
+open class NutshellFirebaseMessagingService : FirebaseMessagingService() {
 
     private val notificationsNotifier: NotificationsFrameworkContract.NotificationsNotifier = FirebaseMessagingComponents.notificationNotifier
 

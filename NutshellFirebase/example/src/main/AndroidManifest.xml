@@ -24,18 +24,11 @@
         <service android:name="com.dorbrauner.example_app.ExampleForegroundService"/>
 
 
-        <service android:name="com.dorbrauner.framework.FirebaseMessagingService">
+        <service android:name="com.dorbrauner.framework.NutshellFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-                android:name="com.dorbrauner.framework.SilentNotificationHandleService"
-                android:exported="false"
-                android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service android:name="com.dorbrauner.framework.NotificationDismissService" />
 
 
     </application>

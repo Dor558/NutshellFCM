@@ -2,11 +2,12 @@
           package="com.dorbrauner.framework">
 
     <application android:allowBackup="true"
-                 android:label="@string/app_name"
-                 android:icon="@mipmap/ic_launcher"
-                 android:roundIcon="@mipmap/ic_launcher_round"
-                 android:supportsRtl="true"
-                 android:theme="@style/AppTheme">
+                 android:label="@string/app_name">
+
+        <service
+                android:name="com.dorbrauner.framework.SilentNotificationHandleService"
+                android:exported="false"
+                android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 
