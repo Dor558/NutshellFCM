@@ -4,13 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.util.Log
-import com.dorbrauner.nutshellfirebase.extensions.TAG
-import com.dorbrauner.nutshellfirebase.extensions.subscribeBy
-import com.dorbrauner.nutshellfirebase.extensions.toBundle
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.ACTION_BROADCAST_REGISTRATION_NOTIFICATION
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.Executors
+import com.dorbrauner.nutshellfirebase.extensions.TAG
+import com.dorbrauner.nutshellfirebase.extensions.toBundle
+import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 
 class NotificationNotifier(
     private val application: Application,
@@ -19,9 +17,9 @@ class NotificationNotifier(
 
     override fun notifyMessage(notificationMessage: NotificationMessage) {
         notificationMessageWriter.write(notificationMessage)
-            .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
-            .subscribeBy(
-                onComplete = {
+            .subscribeOn(Schedulers.single)
+            .subscribe(
+                onResult = {
                     sendBroadcast(notificationMessage)
                 },
                 onError = {

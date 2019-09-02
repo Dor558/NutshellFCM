@@ -6,30 +6,28 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Sources.PersistentSource.Companion.ROOM_TABLE_NOTIFICATION_MESSAGE
-import io.reactivex.Completable
-import io.reactivex.Single
 
 @Dao
 interface NotificationMessageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(notificationMessage: NotificationMessage): Completable
+    fun insert(notificationMessage: NotificationMessage)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(notificationMessages: List<NotificationMessage>): Completable
+    fun insert(notificationMessages: List<NotificationMessage>)
 
     @Query("SELECT * FROM $ROOM_TABLE_NOTIFICATION_MESSAGE")
-    fun getAll(): Single<List<NotificationMessage>>
+    fun getAll(): List<NotificationMessage>
 
     @Query("SELECT * FROM $ROOM_TABLE_NOTIFICATION_MESSAGE WHERE action_id == :id")
-    fun getById(id: String): Single<NotificationMessage>
+    fun getById(id: String): NotificationMessage
 
     @Query("DELETE FROM $ROOM_TABLE_NOTIFICATION_MESSAGE")
-    fun deleteAll(): Completable
+    fun deleteAll()
 
     @Query("DELETE FROM $ROOM_TABLE_NOTIFICATION_MESSAGE WHERE action_id == :id")
-    fun deleteByActionId(id: String): Completable
+    fun deleteByActionId(id: String)
 
     @Query("DELETE FROM $ROOM_TABLE_NOTIFICATION_MESSAGE WHERE action_id in (:list)")
-    fun deleteGroup(list: List<String>): Completable
+    fun deleteGroup(list: List<String>)
 }

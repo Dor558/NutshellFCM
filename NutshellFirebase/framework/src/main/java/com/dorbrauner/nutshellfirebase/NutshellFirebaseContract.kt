@@ -7,8 +7,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
-import io.reactivex.Completable
-import io.reactivex.Single
+import com.dorbrauner.rxworkframework.works.ScheduledWork
 
 interface NutshellFirebaseContract {
 
@@ -21,12 +20,12 @@ interface NutshellFirebaseContract {
     }
 
     interface NotificationMessageWriter {
-        fun write(notificationMessage: NotificationMessage): Completable
+        fun write(notificationMessage: NotificationMessage): ScheduledWork<Unit>
     }
 
     interface NotificationMessageReader {
-        fun read(): Single<List<NotificationMessage>>
-        fun read(id: String): Single<NotificationMessage>
+        fun read(): ScheduledWork<List<NotificationMessage>>
+        fun read(id: String): ScheduledWork<NotificationMessage>
     }
 
     interface NotificationsNotifier {
@@ -38,9 +37,9 @@ interface NutshellFirebaseContract {
     }
 
     interface Repository : NotificationMessageReader {
-        fun purge(): Completable
-        fun remove(id: String): Completable
-        fun remove(ids: List<String>): Completable
+        fun purge(): ScheduledWork<Unit>
+        fun remove(id: String): ScheduledWork<Unit>
+        fun remove(ids: List<String>): ScheduledWork<Unit>
 
     }
 
@@ -52,12 +51,12 @@ interface NutshellFirebaseContract {
                 const val ROOM_TABLE_NOTIFICATION_MESSAGE = "notification_messages"
             }
 
-            fun purge(): Completable
-            fun remove(id: String): Completable
-            fun remove(ids: List<String>): Completable
-            fun read(): Single<List<NotificationMessage>>
-            fun read(id: String): Single<NotificationMessage>
-            fun write(notificationMessage: NotificationMessage): Completable
+            fun purge(): ScheduledWork<Unit>
+            fun remove(id: String): ScheduledWork<Unit>
+            fun remove(ids: List<String>): ScheduledWork<Unit>
+            fun read(): ScheduledWork<List<NotificationMessage>>
+            fun read(id: String): ScheduledWork<NotificationMessage>
+            fun write(notificationMessage: NotificationMessage): ScheduledWork<Unit>
 
         }
 
@@ -74,12 +73,12 @@ interface NutshellFirebaseContract {
 
     interface Interactor {
 
-        fun purgeNotifications(): Completable
-        fun removeNotification(id: String): Completable
-        fun removeNotifications(ids: List<String>): Completable
-        fun readNotification(id: String): Single<NotificationMessage>
-        fun readNotifications(): Single<List<NotificationMessage>>
-        fun writeNotification(notificationMessage: NotificationMessage): Completable
+        fun purgeNotifications(): ScheduledWork<Unit>
+        fun removeNotification(id: String): ScheduledWork<Unit>
+        fun removeNotifications(ids: List<String>): ScheduledWork<Unit>
+        fun readNotification(id: String): ScheduledWork<NotificationMessage>
+        fun readNotifications(): ScheduledWork<List<NotificationMessage>>
+        fun writeNotification(notificationMessage: NotificationMessage): ScheduledWork<Unit>
     }
 
     interface NotificationsHandling {

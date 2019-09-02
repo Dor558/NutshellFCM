@@ -1,10 +1,9 @@
 package com.dorbrauner.nutshellfirebase
 
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
-import com.dorbrauner.nutshellfirebase.extensions.subscribeBy
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import com.dorbrauner.rxworkframework.RxWork
+import com.dorbrauner.rxworkframework.scheudlers.Schedulers
+import com.dorbrauner.rxworkframework.works.ScheduledWork
 
 
 internal class NotificationsInteractor(
@@ -12,136 +11,109 @@ internal class NotificationsInteractor(
     private val cacheSource: NutshellFirebaseContract.Sources.CacheSource
 ) : NutshellFirebaseContract.Interactor {
 
-    override fun purgeNotifications(): Completable {
-        return Completable.create { emitter ->
+    override fun purgeNotifications(): ScheduledWork<Unit> {
+        return RxWork.create { emitter ->
             cacheSource.clearCache()
-            val disposable = persistentSource.purge()
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onComplete = {
-                                emitter.onComplete()
+            persistentSource.purge()
+                    .subscribeOn(Schedulers.unbounded)
+                    .subscribe(
+                            onResult = {
+                                emitter.onResult(Unit)
                             },
                             onError = {
                                 emitter.onError(it)
                             }
                     )
-
-            emitter.setCancellable {
-                disposable.dispose()
-            }
         }
     }
 
-    override fun removeNotification(id: String): Completable {
-        return Completable.create { emitter ->
+    override fun removeNotification(id: String): ScheduledWork<Unit> {
+        return RxWork.create { emitter ->
             cacheSource.removeFromCache(id)
-            val disposable = persistentSource.remove(id)
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onComplete = {
-                                emitter.onComplete()
+            persistentSource.remove(id)
+                    .subscribeOn(Schedulers.unbounded)
+                    .subscribe(
+                            onResult = {
+                                emitter.onResult(Unit)
                             },
                             onError = {
                                 emitter.onError(it)
                             }
                     )
-
-
-            emitter.setCancellable {
-                disposable.dispose()
-            }
         }
     }
 
-    override fun removeNotifications(ids: List<String>): Completable {
-        return Completable.create { emitter ->
+    override fun removeNotifications(ids: List<String>): ScheduledWork<Unit> {
+        return RxWork.create { emitter ->
             cacheSource.removeFromCache(ids)
-            val disposable = persistentSource.remove(ids)
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onComplete = {
-                        emitter.onComplete()
+            persistentSource.remove(ids)
+                .subscribeOn(Schedulers.unbounded)
+                .subscribe(
+                    onResult = {
+                        emitter.onResult(Unit)
                     },
                     onError = {
                         emitter.onError(it)
                     }
                 )
-
-
-            emitter.setCancellable {
-                disposable.dispose()
-            }
         }
     }
 
-    override fun readNotification(id: String): Single<NotificationMessage> {
-        return Single.create { emitter ->
+    override fun readNotification(id: String): ScheduledWork<NotificationMessage> {
+        return RxWork.create { emitter ->
             val cacheNotificationMessage = cacheSource.readCache(id)
             if (cacheNotificationMessage != null) {
-                emitter.onSuccess(cacheNotificationMessage)
+                emitter.onResult(cacheNotificationMessage)
                 return@create
             }
 
-            val disposable = persistentSource.read(id)
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onSuccess = {
-                                emitter.onSuccess(it)
-                            },
-                            onError = {
-                                emitter.onError(it)
-                            }
-                    )
-
-            emitter.setCancellable {
-                disposable.dispose()
-            }
+            persistentSource.read(id)
+                .subscribeOn(Schedulers.unbounded)
+                .subscribe(
+                    onResult = {
+                        emitter.onResult(it)
+                    },
+                    onError = {
+                        emitter.onError(it)
+                    }
+                )
         }
     }
 
-    override fun readNotifications(): Single<List<NotificationMessage>> {
-        return Single.create { emitter ->
+    override fun readNotifications(): ScheduledWork<List<NotificationMessage>> {
+        return RxWork.create { emitter ->
             val cacheNotificationMessage = cacheSource.readCache()
             if (!cacheNotificationMessage.isNullOrEmpty()) {
-                emitter.onSuccess(cacheNotificationMessage)
+                emitter.onResult(cacheNotificationMessage)
                 return@create
             }
 
-            val disposable = persistentSource.read()
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onSuccess = {
-                                emitter.onSuccess(it)
+            persistentSource.read()
+                    .subscribeOn(Schedulers.unbounded)
+                    .subscribe(
+                            onResult = {
+                                emitter.onResult(it)
                             },
                             onError = {
                                 emitter.onError(it)
                             }
                     )
-
-            emitter.setCancellable {
-                disposable.dispose()
-            }
         }
     }
 
-    override fun writeNotification(notificationMessage: NotificationMessage): Completable {
-        return Completable.create { emitter ->
+    override fun writeNotification(notificationMessage: NotificationMessage): ScheduledWork<Unit> {
+        return RxWork.create { emitter ->
             cacheSource.writeCache(notificationMessage)
-            val disposable = persistentSource.write(notificationMessage)
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onComplete = {
-                                emitter.onComplete()
+            persistentSource.write(notificationMessage)
+                    .subscribeOn(Schedulers.unbounded)
+                    .subscribe(
+                            onResult = {
+                                emitter.onResult(Unit)
                             },
                             onError = {
                                 emitter.onError(it)
                             }
                     )
-
-
-            emitter.setCancellable {
-                disposable.dispose()
-            }
         }
     }
 }

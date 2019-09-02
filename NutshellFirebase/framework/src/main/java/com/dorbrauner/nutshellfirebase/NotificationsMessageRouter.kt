@@ -5,9 +5,7 @@ import android.util.Log
 import androidx.core.app.JobIntentService
 import com.dorbrauner.nutshellfirebase.application.contexts.ApplicationContext
 import com.dorbrauner.nutshellfirebase.extensions.TAG
-import com.dorbrauner.nutshellfirebase.extensions.subscribeBy
-import io.reactivex.schedulers.Schedulers
-
+import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 
 internal class NotificationsMessageRouter(
     private val applicationContext: ApplicationContext,
@@ -21,9 +19,9 @@ internal class NotificationsMessageRouter(
 
         notificationsRepository
             .read(actionId)
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = { notificationMessage ->
+            .subscribeOn(Schedulers.unbounded)
+            .subscribe(
+                onResult = { notificationMessage ->
                     when (notificationMessage.type) {
 
                         NutshellFirebaseContract.NotificationType.NOTIFICATION -> {
@@ -44,6 +42,7 @@ internal class NotificationsMessageRouter(
                         }
                     }
                 },
+
                 onError = {
                     Log.e(TAG, "Failed to read notification message", it)
                 }

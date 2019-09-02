@@ -1,22 +1,21 @@
 package com.dorbrauner.nutshellfirebase
 
-import com.dorbrauner.nutshellfirebase.extensions.subscribeBy
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import com.dorbrauner.rxworkframework.RxWork
+import com.dorbrauner.rxworkframework.scheudlers.Schedulers
+import com.dorbrauner.rxworkframework.works.ScheduledWork
 
 internal class NotificationsRepository(private val notificationsInteractor: NutshellFirebaseContract.Interactor)
     : NutshellFirebaseContract.Repository,
     NutshellFirebaseContract.NotificationMessageWriter {
 
-    override fun write(notificationMessage: NotificationMessage): Completable {
-        return Completable.create { emitter ->
+    override fun write(notificationMessage: NotificationMessage): ScheduledWork<Unit> {
+        return RxWork.create { emitter ->
             notificationsInteractor.writeNotification(notificationMessage)
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onComplete = {
-                                emitter.onComplete()
+                    .subscribeOn(Schedulers.unbounded)
+                    .subscribe(
+                            onResult = {
+                                emitter.onResult(Unit)
                             },
                             onError = {
                                 emitter.onError(it)
@@ -25,13 +24,13 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
         }
     }
 
-    override fun read(): Single<List<NotificationMessage>> {
-        return Single.create { emitter ->
+    override fun read(): ScheduledWork<List<NotificationMessage>> {
+        return RxWork.create { emitter ->
             notificationsInteractor.readNotifications()
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onSuccess = {
-                                emitter.onSuccess(it)
+                    .subscribeOn(Schedulers.unbounded)
+                    .subscribe(
+                            onResult = {
+                                emitter.onResult(it)
                             },
                             onError = {
                                 emitter.onError(it)
@@ -40,30 +39,30 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
         }
     }
 
-    override fun read(id: String): Single<NotificationMessage> {
-        return Single.create { emitter ->
+    override fun read(id: String): ScheduledWork<NotificationMessage> {
+        return RxWork.create { emitter ->
             notificationsInteractor
-                    .readNotification(id)
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onSuccess = {
-                                emitter.onSuccess(it)
-                            },
-                            onError = {
-                                emitter.onError(it)
-                            }
-                    )
+                .readNotification(id)
+                .subscribeOn(Schedulers.unbounded)
+                .subscribe(
+                    onResult = {
+                        emitter.onResult(it)
+                    },
+                    onError = {
+                        emitter.onError(it)
+                    }
+                )
         }
     }
 
-    override fun purge(): Completable {
-        return Completable.create { emitter ->
+    override fun purge(): ScheduledWork<Unit> {
+        return RxWork.create { emitter ->
             notificationsInteractor
                     .purgeNotifications()
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onComplete = {
-                                emitter.onComplete()
+                    .subscribeOn(Schedulers.unbounded)
+                    .subscribe(
+                            onResult = {
+                                emitter.onResult(Unit)
                             },
                             onError = {
                                 emitter.onError(it)
@@ -72,14 +71,14 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
         }
     }
 
-    override fun remove(id: String): Completable {
-        return Completable.create { emitter ->
+    override fun remove(id: String): ScheduledWork<Unit> {
+        return RxWork.create { emitter ->
             notificationsInteractor
                     .removeNotification(id)
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                            onComplete = {
-                                emitter.onComplete()
+                    .subscribeOn(Schedulers.unbounded)
+                    .subscribe(
+                            onResult = {
+                                emitter.onResult(Unit)
                             },
                             onError = {
                                 emitter.onError(it)
@@ -88,14 +87,14 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
         }
     }
 
-    override fun remove(ids: List<String>): Completable {
-        return Completable.create { emitter ->
+    override fun remove(ids: List<String>): ScheduledWork<Unit> {
+        return RxWork.create { emitter ->
             notificationsInteractor
                 .removeNotifications(ids)
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onComplete = {
-                        emitter.onComplete()
+                .subscribeOn(Schedulers.unbounded)
+                .subscribe(
+                    onResult = {
+                        emitter.onResult(Unit)
                     },
                     onError = {
                         emitter.onError(it)

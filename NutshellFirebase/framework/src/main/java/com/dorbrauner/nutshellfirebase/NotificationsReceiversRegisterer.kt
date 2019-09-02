@@ -14,6 +14,7 @@ import com.dorbrauner.nutshellfirebase.application.ActivityLifecycleCallback
 import com.dorbrauner.nutshellfirebase.application.ApplicationLifeCycleWrapper
 import com.dorbrauner.nutshellfirebase.di.FirebaseMessagingComponents
 import com.dorbrauner.nutshellfirebase.extensions.TAG
+import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 
 internal class NotificationsReceiversRegisterer(
     applicationLifeCycleWrapper: ApplicationLifeCycleWrapper,
@@ -32,8 +33,12 @@ internal class NotificationsReceiversRegisterer(
                 ?: throw Error.UnknownNotificationActionIdThrowable(null)
 
             runCatching {
-                val notificationMessage = notificationsRepository.read(actionId).blockingGet()
-                when (notificationMessage.type) {
+                val notificationMessage = notificationsRepository.read(actionId)
+                    .subscribeOn(Schedulers.unbounded)
+                    .observeOn(Schedulers.unbounded)
+                    .blockingGet()
+
+                when (notificationMessage?.type) {
                     NotificationType.NOTIFICATION -> {
                         notificationsConsumer.consumeNotificationsMessages()
                         abortBroadcast()

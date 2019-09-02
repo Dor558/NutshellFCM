@@ -7,9 +7,8 @@ import android.util.Log
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
 import com.dorbrauner.nutshellfirebase.di.FirebaseMessagingComponents
 import com.dorbrauner.nutshellfirebase.extensions.TAG
-import com.dorbrauner.nutshellfirebase.extensions.subscribeBy
 import com.dorbrauner.nutshellfirebase.extensions.toBundle
-import io.reactivex.schedulers.Schedulers
+import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 
 
 abstract class ForegroundService : Service() {
@@ -25,9 +24,9 @@ abstract class ForegroundService : Service() {
             ?: throw NutshellFirebaseContract.Error.UnknownNotificationActionIdThrowable(null)
 
         notificationsRepository.read(actionId)
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess = { notificationMessage ->
+            .subscribeOn(Schedulers.unbounded)
+            .subscribe(
+                onResult = { notificationMessage ->
                     val androidNotification = androidNotificationsFactory.create(notificationMessage)
                     androidNotificationsManager.showForeground(this, androidNotification)
                     onForegroundStarted(notificationMessage.payload.toBundle())

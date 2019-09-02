@@ -8,9 +8,7 @@ import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Error.*
 import com.dorbrauner.nutshellfirebase.application.contexts.ApplicationContext
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
 import com.dorbrauner.nutshellfirebase.extensions.TAG
-import com.dorbrauner.nutshellfirebase.extensions.subscribeBy
-import io.reactivex.android.schedulers.AndroidSchedulers
-
+import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 
 internal class NotificationsConsumer(
     private val applicationContext: ApplicationContext,
@@ -27,11 +25,12 @@ internal class NotificationsConsumer(
                 casesManager.init()
             }.map {
                 consumeRecursive(listOf(it))
-            }.flatMapCompletable {
+            }.flatMap {
                 notificationsRepository.remove(actionId)
-            }.subscribeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onComplete = {
+            }
+            .subscribeOn(Schedulers.main)
+            .subscribe(
+                onResult = {
                     Log.d(TAG, "notification of id $actionId consumed")
                 },
                 onError = {
@@ -54,10 +53,9 @@ internal class NotificationsConsumer(
             }.map { notificationMessages ->
                 notificationsRepository.remove(notificationMessages)
             }
-            .ignoreElement()
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onComplete = {
+            .subscribeOn(Schedulers.main)
+            .subscribe(
+                onResult = {
                     Log.d(TAG, "all notifications consumed")
                 },
                 onError = {

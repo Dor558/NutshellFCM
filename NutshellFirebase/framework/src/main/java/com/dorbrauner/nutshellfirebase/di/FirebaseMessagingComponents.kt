@@ -10,7 +10,7 @@ import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
 
 internal object FirebaseMessagingComponents {
 
-    lateinit var Database: Database
+    lateinit var database: Database
     lateinit var cacheSource: NutshellFirebaseContract.Sources.CacheSource
     lateinit var persistentSource: NutshellFirebaseContract.Sources.PersistentSource
     lateinit var notificationsInteractor: NutshellFirebaseContract.Interactor
@@ -33,10 +33,10 @@ internal object FirebaseMessagingComponents {
              foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder): Boolean {
         val applicationContext = Injections.provideApplicationContext(application)
         androidNotificationsFactory = notificationsFactory
-        Database = Injections.provideDatabase(application)
+        database = Injections.provideDatabase(application)
         systemNotificationManager = Injections.provideNotificationsManager(application)
         cacheSource = Injections.provideCacheSource()
-        persistentSource = Injections.providePersistentSource(Database)
+        persistentSource = Injections.providePersistentSource(database)
         notificationsInteractor = Injections.provideNotificationInteractor(persistentSource, cacheSource)
         notificationsRepository = Injections.provideNotificationRepository(notificationsInteractor)
         importanceTranslator = Injections.provideImpotenceTranslator()
