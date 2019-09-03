@@ -1,9 +1,11 @@
 package com.dorbrauner.nutshellfirebase
 
+import androidx.lifecycle.MutableLiveData
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.NotificationsHandling.Case
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
 
-internal class NotificationCasesManager(private val casesProvider: NutshellFirebaseContract.NotificationsHandling.CasesProvider):
+internal class NotificationCasesManager(private val casesProvider: NutshellFirebaseContract.NotificationsHandling.CasesProvider,
+                                        private val handledNotificationsNotifier: NutshellFirebaseContract.NotificationsHandling.HandledNotificationsNotifier):
     NutshellFirebaseContract.NotificationsHandling.CasesManager {
 
     private var iterator: Iterator<Case>? = null
@@ -30,6 +32,7 @@ internal class NotificationCasesManager(private val casesProvider: NutshellFireb
             val caseMessages = notifications.filter { case.actionIds.contains(it.actionId) }
             if (caseMessages.isNotEmpty()) {
                 case.consume(caseMessages)
+                (handledNotificationsNotifier.handledNotifications as MutableLiveData).postValue(caseMessages)
             }
 
             caseMessages

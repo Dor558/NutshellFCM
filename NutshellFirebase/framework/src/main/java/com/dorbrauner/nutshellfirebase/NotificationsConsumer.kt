@@ -51,7 +51,7 @@ internal class NotificationsConsumer(
             .map { notificationMessages ->
                 consumeRecursive(notificationMessages)
                 notificationMessages.map { it.actionId }
-            }.map { notificationMessages ->
+            }.flatMap { notificationMessages ->
                 notificationsRepository.remove(notificationMessages)
             }
             .subscribeOn(Schedulers.unbounded)

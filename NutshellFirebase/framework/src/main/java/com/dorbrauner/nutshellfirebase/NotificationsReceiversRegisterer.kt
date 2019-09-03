@@ -12,7 +12,7 @@ import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.NotificationRece
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.NotificationReceiversRegisterer.Companion.FOREGROUND_PRIORITY
 import com.dorbrauner.nutshellfirebase.application.ActivityLifecycleCallback
 import com.dorbrauner.nutshellfirebase.application.ApplicationLifeCycleWrapper
-import com.dorbrauner.nutshellfirebase.di.FirebaseMessagingComponents
+import com.dorbrauner.nutshellfirebase.di.NutshellFirebaseComponents
 import com.dorbrauner.nutshellfirebase.extensions.TAG
 import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 
@@ -22,7 +22,7 @@ internal class NotificationsReceiversRegisterer(
     private val notificationsConsumer: NutshellFirebaseContract.NotificationsConsumer
 ): NotificationReceiversRegisterer {
 
-    private val notificationsRepository = FirebaseMessagingComponents.notificationsRepository
+    private val notificationsRepository = NutshellFirebaseComponents.notificationsRepository
 
     private val applicationReceiver = NotificationsRouterBroadcastReceiver()
 

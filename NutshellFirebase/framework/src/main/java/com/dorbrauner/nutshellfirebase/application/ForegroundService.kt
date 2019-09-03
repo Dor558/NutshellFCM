@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
-import com.dorbrauner.nutshellfirebase.di.FirebaseMessagingComponents
+import com.dorbrauner.nutshellfirebase.di.NutshellFirebaseComponents
 import com.dorbrauner.nutshellfirebase.extensions.TAG
 import com.dorbrauner.nutshellfirebase.extensions.toBundle
 import com.dorbrauner.rxworkframework.scheudlers.Schedulers
@@ -13,11 +13,11 @@ import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 
 abstract class ForegroundService : Service() {
 
-    private val androidNotificationsFactory = FirebaseMessagingComponents.androidNotificationsFactory
+    private val androidNotificationsFactory = NutshellFirebaseComponents.androidNotificationsFactory
 
-    private val notificationsRepository = FirebaseMessagingComponents.notificationsRepository
+    private val notificationsRepository = NutshellFirebaseComponents.notificationsRepository
 
-    private val androidNotificationsManager = FirebaseMessagingComponents.notificationsManager
+    private val androidNotificationsManager = NutshellFirebaseComponents.notificationsManager
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val actionId = intent?.extras?.getString(NutshellFirebaseContract.KEY_ACTION_ID)

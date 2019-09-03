@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
 import com.dorbrauner.rxworkframework.works.ScheduledWork
 
@@ -98,6 +99,10 @@ interface NutshellFirebaseContract {
             val actionIds: List<String>
 
             fun consume(caseMessages: List<NotificationMessage>)
+        }
+
+        interface HandledNotificationsNotifier {
+            val handledNotifications: LiveData<List<NotificationMessage>>
         }
     }
 

@@ -39,8 +39,10 @@ internal object Injections {
         return CacheSource()
     }
 
-    fun provideNotificationInteractor(persistentSource: NutshellFirebaseContract.Sources.PersistentSource,
-                                      cacheSource: NutshellFirebaseContract.Sources.CacheSource): NutshellFirebaseContract.Interactor {
+    fun provideNotificationInteractor(
+        persistentSource: NutshellFirebaseContract.Sources.PersistentSource,
+        cacheSource: NutshellFirebaseContract.Sources.CacheSource
+    ): NutshellFirebaseContract.Interactor {
         return NotificationsInteractor(persistentSource, cacheSource)
     }
 
@@ -48,34 +50,58 @@ internal object Injections {
         return NotificationsRepository(notificationsInteractor)
     }
 
-    fun provideCaseManager(casesProvider: NutshellFirebaseContract.NotificationsHandling.CasesProvider): NutshellFirebaseContract.NotificationsHandling.CasesManager {
-        return NotificationCasesManager(casesProvider)
+    fun provideNotificationsHanlder(): NutshellFirebaseContract.NotificationsHandling.HandledNotificationsNotifier {
+        return NutshellNotificationHandler
     }
 
-    fun provideNotificationsConsumer(applicationContext: ApplicationContext,
-                                     notificationManager: NotificationManager,
-                                     foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder,
-                                     notificationsRepository: NutshellFirebaseContract.Repository,
-                                     casesManager: NutshellFirebaseContract.NotificationsHandling.CasesManager): NutshellFirebaseContract.NotificationsConsumer {
-        return NotificationsConsumer(applicationContext, notificationManager, notificationsRepository, foregroundServicesBinder, casesManager)
+    fun provideCaseManager(casesProvider: NutshellFirebaseContract.NotificationsHandling.CasesProvider,
+                           handledNotificationsNotifier: NutshellFirebaseContract.NotificationsHandling.HandledNotificationsNotifier): NutshellFirebaseContract.NotificationsHandling.CasesManager {
+        return NotificationCasesManager(casesProvider, handledNotificationsNotifier)
     }
 
-    fun provideNotificationReceiversRegisterer(applicationLifeCycleWrapper: ApplicationLifeCycleWrapper,
-                                               application: Application,
-                                               notificationsConsumer: NutshellFirebaseContract.NotificationsConsumer): NotificationsReceiversRegisterer {
+    fun provideNotificationsConsumer(
+        applicationContext: ApplicationContext,
+        notificationManager: NotificationManager,
+        foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder,
+        notificationsRepository: NutshellFirebaseContract.Repository,
+        casesManager: NutshellFirebaseContract.NotificationsHandling.CasesManager
+    ): NutshellFirebaseContract.NotificationsConsumer {
+        return NotificationsConsumer(
+            applicationContext,
+            notificationManager,
+            notificationsRepository,
+            foregroundServicesBinder,
+            casesManager
+        )
+    }
+
+    fun provideNotificationReceiversRegisterer(
+        applicationLifeCycleWrapper: ApplicationLifeCycleWrapper,
+        application: Application,
+        notificationsConsumer: NutshellFirebaseContract.NotificationsConsumer
+    ): NotificationsReceiversRegisterer {
         return NotificationsReceiversRegisterer(applicationLifeCycleWrapper, application, notificationsConsumer)
     }
 
-    fun provideNotificationBuilder(applicationContext: ApplicationContext,
-                                   foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder,
-                                   androidNotificationsManager: NutshellFirebaseContract.AndroidNotificationsManager,
-                                   notificationsFactory: NutshellFirebaseContract.AndroidNotificationsFactory): NutshellFirebaseContract.AndroidNotificationBuilder {
-        return AndroidNotificationBuilder(applicationContext, foregroundServicesBinder, androidNotificationsManager, notificationsFactory)
+    fun provideNotificationBuilder(
+        applicationContext: ApplicationContext,
+        foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder,
+        androidNotificationsManager: NutshellFirebaseContract.AndroidNotificationsManager,
+        notificationsFactory: NutshellFirebaseContract.AndroidNotificationsFactory
+    ): NutshellFirebaseContract.AndroidNotificationBuilder {
+        return AndroidNotificationBuilder(
+            applicationContext,
+            foregroundServicesBinder,
+            androidNotificationsManager,
+            notificationsFactory
+        )
     }
 
-    fun provideNotificationsMessageReceiver(applicationContext: ApplicationContext,
-                                            notificationsRepository: NutshellFirebaseContract.Repository,
-                                            notificationBuilder: NutshellFirebaseContract.AndroidNotificationBuilder): NutshellFirebaseContract.NotificationsMessageRouter {
+    fun provideNotificationsMessageReceiver(
+        applicationContext: ApplicationContext,
+        notificationsRepository: NutshellFirebaseContract.Repository,
+        notificationBuilder: NutshellFirebaseContract.AndroidNotificationBuilder
+    ): NutshellFirebaseContract.NotificationsMessageRouter {
         return NotificationsMessageRouter(applicationContext, notificationsRepository, notificationBuilder)
     }
 
@@ -83,8 +109,10 @@ internal object Injections {
         return ImportanceTranslator()
     }
 
-    fun provideNotificationsManager(notificationManager: NotificationManager,
-                                    importanceTranslator: NutshellFirebaseContract.Translators.ImportanceTranslator): NutshellFirebaseContract.AndroidNotificationsManager {
+    fun provideNotificationsManager(
+        notificationManager: NotificationManager,
+        importanceTranslator: NutshellFirebaseContract.Translators.ImportanceTranslator
+    ): NutshellFirebaseContract.AndroidNotificationsManager {
         return AndroidNotificationsManager(notificationManager, importanceTranslator)
     }
 
@@ -92,8 +120,10 @@ internal object Injections {
         return notificationsRepository as NutshellFirebaseContract.NotificationMessageWriter
     }
 
-    fun provideNotificationsNotifier(application: Application,
-                                     notificationMessageWriter: NutshellFirebaseContract.NotificationMessageWriter): NutshellFirebaseContract.NotificationsNotifier {
+    fun provideNotificationsNotifier(
+        application: Application,
+        notificationMessageWriter: NutshellFirebaseContract.NotificationMessageWriter
+    ): NutshellFirebaseContract.NotificationsNotifier {
         return NotificationNotifier(application, notificationMessageWriter)
     }
 }

@@ -9,7 +9,7 @@ import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.KEY_AC
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.KEY_PAYLOAD
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.KEY_TIMESTAMP
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.KEY_TYPE
-import org.joda.time.DateTime
+import java.util.*
 
 @Entity(tableName = Sources.PersistentSource.ROOM_TABLE_NOTIFICATION_MESSAGE)
 data class NotificationMessage(
@@ -25,7 +25,7 @@ data class NotificationMessage(
     val payload: Map<String, String> = mapOf(KEY_ACTION_ID to actionId),
 
     @ColumnInfo(name = KEY_TIMESTAMP)
-    val timeStamp: DateTime = DateTime()
+    val timeStamp: Date = Date()
 ) {
     @Ignore
     val notificationId = actionId.hashCode()

@@ -4,8 +4,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.content.Intent.FLAG_RECEIVER_FOREGROUND
-import android.os.Handler
-import android.os.HandlerThread
 import android.util.Log
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.ACTION_BROADCAST_REGISTRATION_NOTIFICATION
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage

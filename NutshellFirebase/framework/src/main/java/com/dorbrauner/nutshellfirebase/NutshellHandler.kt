@@ -4,5 +4,5 @@ import android.os.Handler
 import android.os.HandlerThread
 
 
-object NutshellHandler: Handler(HandlerThread("NutshellHandler", Thread.MAX_PRIORITY)
+internal object NutshellHandler: Handler(HandlerThread("NutshellHandler", Thread.MAX_PRIORITY)
     .also { it.start() }.looper)

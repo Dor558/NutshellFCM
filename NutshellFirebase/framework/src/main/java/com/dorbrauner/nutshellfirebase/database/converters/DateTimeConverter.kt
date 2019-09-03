@@ -1,12 +1,12 @@
 package com.dorbrauner.nutshellfirebase.database.converters
 
 import androidx.room.TypeConverter
-import org.joda.time.DateTime
+import java.util.*
 
 class DateTimeConverter {
     @TypeConverter
-    fun dateTimeToMillis(dataTime: DateTime): Long = dataTime.millis
+    fun dateTimeToMillis(dataTime: Date): Long = dataTime.time
 
     @TypeConverter
-    fun millisToDateTime(value: Long): DateTime = DateTime(value)
+    fun millisToDateTime(value: Long): Date = Date(value)
 }

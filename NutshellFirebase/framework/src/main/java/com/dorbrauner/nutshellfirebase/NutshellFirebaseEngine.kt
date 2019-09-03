@@ -2,7 +2,7 @@ package com.dorbrauner.nutshellfirebase
 
 import android.app.Application
 import android.util.Log
-import com.dorbrauner.nutshellfirebase.di.FirebaseMessagingComponents
+import com.dorbrauner.nutshellfirebase.di.NutshellFirebaseComponents
 import com.dorbrauner.nutshellfirebase.extensions.TAG
 import com.google.firebase.iid.FirebaseInstanceId
 
@@ -25,7 +25,7 @@ object NutshellFirebaseEngine {
             return
         }
 
-        isInitialized = FirebaseMessagingComponents.init(
+        isInitialized = NutshellFirebaseComponents.init(
             application,
             androidNotificationsFactory,
             casesProvider,

@@ -8,7 +8,7 @@ import com.dorbrauner.nutshellfirebase.database.Database
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
 
 
-internal object FirebaseMessagingComponents {
+internal object NutshellFirebaseComponents {
 
     lateinit var database: Database
     lateinit var cacheSource: NutshellFirebaseContract.Sources.CacheSource
@@ -26,6 +26,7 @@ internal object FirebaseMessagingComponents {
     lateinit var casesManager: NutshellFirebaseContract.NotificationsHandling.CasesManager
     lateinit var notificationsReceiversRegisterer: NotificationsReceiversRegisterer
     lateinit var androidNotificationsFactory: NutshellFirebaseContract.AndroidNotificationsFactory
+    lateinit var handledNotificationsNotifier: NutshellFirebaseContract.NotificationsHandling.HandledNotificationsNotifier
 
     fun init(application: Application,
              notificationsFactory: NutshellFirebaseContract.AndroidNotificationsFactory,
@@ -54,7 +55,8 @@ internal object FirebaseMessagingComponents {
         )
         notificationsWriter = Injections.provideNotificationsNotificationsWriter(notificationsRepository)
         notificationNotifier = Injections.provideNotificationsNotifier(application, notificationsWriter)
-        casesManager = Injections.provideCaseManager(casesProvider)
+        handledNotificationsNotifier = Injections.provideNotificationsHanlder()
+        casesManager = Injections.provideCaseManager(casesProvider, handledNotificationsNotifier)
         notificationsConsumer = Injections.provideNotificationsConsumer(
             applicationContext,
             systemNotificationManager,
