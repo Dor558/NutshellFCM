@@ -13,9 +13,7 @@ class FutureTask(private val runnable: Runnable) : Callable<Unit> , Cancelable {
     override val isCancelled by lazy { future.isCancelled }
 
     override fun call() {
-        if (!isCancelled) {
-            runnable.run()
-        }
+        runnable.run()
     }
 
     override fun cancel() {

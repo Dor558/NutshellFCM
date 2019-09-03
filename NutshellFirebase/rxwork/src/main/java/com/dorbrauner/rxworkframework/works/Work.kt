@@ -67,7 +67,6 @@ internal open class Work<T>(
 
     private fun subscribeActual(scheduler: Scheduler): CompositeCancellable {
         subscribers.forEach { it.onSubscribe() }
-        subscribers.clear()
 
         if (isScheduled.get() == null) {
             val cancellable = scheduler.schedule(emittedRunnable)

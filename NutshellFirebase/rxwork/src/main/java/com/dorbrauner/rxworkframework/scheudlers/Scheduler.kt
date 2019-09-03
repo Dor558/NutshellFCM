@@ -8,5 +8,4 @@ interface Scheduler {
     fun start()
     fun shutdown()
     fun schedule(runnable: Runnable): Cancelable
-    fun blockingSchedule(runnable: Runnable)
 }

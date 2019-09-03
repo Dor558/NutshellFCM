@@ -15,21 +15,19 @@ class ExampleActivity : AppCompatActivity() {
         setContentView(R.layout.example_activity_layout)
     }
 
+    override fun onResume() {
+        super.onResume()
+        LocalMessagesNotifier.notifyDismiss("Action 4")
+    }
 
-    override fun onStart() {
-        super.onStart()
+
+    override fun onPause() {
+        super.onPause()
         LocalMessagesNotifier.notify(
             NotificationMessage(
                 "Action 4",
                 NotificationType.FOREGROUND_NOTIFICATION
-            )
-        )
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-        LocalMessagesNotifier.notifyDismiss("Action 4")
+            ))
     }
 
 }

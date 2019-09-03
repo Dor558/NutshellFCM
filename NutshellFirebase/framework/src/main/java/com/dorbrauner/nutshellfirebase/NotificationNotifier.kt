@@ -3,6 +3,9 @@ package com.dorbrauner.nutshellfirebase
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.content.Intent.FLAG_RECEIVER_FOREGROUND
+import android.os.Handler
+import android.os.HandlerThread
 import android.util.Log
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.ACTION_BROADCAST_REGISTRATION_NOTIFICATION
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
@@ -18,6 +21,7 @@ class NotificationNotifier(
     override fun notifyMessage(notificationMessage: NotificationMessage) {
         notificationMessageWriter.write(notificationMessage)
             .subscribeOn(Schedulers.single)
+            .observeOn(Schedulers.single)
             .subscribe(
                 onResult = {
                     sendBroadcast(notificationMessage)
@@ -30,12 +34,13 @@ class NotificationNotifier(
 
     private fun sendBroadcast(notificationMessage: NotificationMessage) {
         val broadcast = Intent(ACTION_BROADCAST_REGISTRATION_NOTIFICATION)
+        broadcast.flags = FLAG_RECEIVER_FOREGROUND;
         broadcast.putExtras(notificationMessage.payload.toBundle())
         application.sendOrderedBroadcast(
             broadcast,
             null,
             null,
-            null,
+            NutshellHandler,
             Activity.RESULT_OK,
             null,
             broadcast.extras

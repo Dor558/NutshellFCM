@@ -19,7 +19,7 @@ internal class NotificationsMessageRouter(
 
         notificationsRepository
             .read(actionId)
-            .subscribeOn(Schedulers.unbounded)
+            .subscribeOn(Schedulers.bounded)
             .subscribe(
                 onResult = { notificationMessage ->
                     when (notificationMessage.type) {

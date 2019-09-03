@@ -4,7 +4,7 @@ import com.dorbrauner.nutshellfirebase.database.Database
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
 import com.dorbrauner.nutshellfirebase.database.dao.NotificationMessageDao
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
-import com.dorbrauner.rxworkframework.RxWork
+import com.dorbrauner.rxworkframework.RxWorkCreator
 import com.dorbrauner.rxworkframework.works.ScheduledWork
 
 
@@ -13,7 +13,7 @@ internal class PersistentSource(Database: Database): NutshellFirebaseContract.So
     private val dao: NotificationMessageDao = Database.notificationMessageDao()
 
     override fun purge(): ScheduledWork<Unit> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             runCatching {
                 emitter.onResult(dao.deleteAll())
             }.getOrElse {
@@ -23,7 +23,7 @@ internal class PersistentSource(Database: Database): NutshellFirebaseContract.So
     }
 
     override fun remove(id: String): ScheduledWork<Unit> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             runCatching {
                 emitter.onResult(dao.deleteByActionId(id))
             }.getOrElse {
@@ -33,7 +33,7 @@ internal class PersistentSource(Database: Database): NutshellFirebaseContract.So
     }
 
     override fun remove(ids: List<String>): ScheduledWork<Unit> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             runCatching {
                 emitter.onResult(dao.deleteGroup(ids))
             }.getOrElse {
@@ -43,7 +43,7 @@ internal class PersistentSource(Database: Database): NutshellFirebaseContract.So
     }
 
     override fun read(): ScheduledWork<List<NotificationMessage>> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             runCatching {
                 emitter.onResult(dao.getAll())
             }.getOrElse {
@@ -53,7 +53,7 @@ internal class PersistentSource(Database: Database): NutshellFirebaseContract.So
     }
 
     override fun read(id: String): ScheduledWork<NotificationMessage>{
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             runCatching {
                 emitter.onResult(dao.getById(id))
             }.getOrElse {
@@ -63,7 +63,7 @@ internal class PersistentSource(Database: Database): NutshellFirebaseContract.So
     }
 
     override fun write(notificationMessage: NotificationMessage): ScheduledWork<Unit> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             runCatching {
                 dao.insert(notificationMessage)
                 emitter.onResult(Unit)
