@@ -23,9 +23,13 @@ internal class NotificationsConsumer(
         notificationsRepository.read(actionId)
             .doOnSubscribe {
                 casesManager.init()
-            }.map {
+            }
+            .observeOn(Schedulers.main)
+            .map {
                 consumeRecursive(listOf(it))
-            }.flatMap {
+            }
+            .observeOn(Schedulers.unbounded)
+            .flatMap {
                 notificationsRepository.remove(actionId)
             }
             .subscribeOn(Schedulers.unbounded)
@@ -48,10 +52,13 @@ internal class NotificationsConsumer(
             .map { notificationMessages ->
                 notificationMessages.filter { it.type == NotificationType.NOTIFICATION }
             }
+            .observeOn(Schedulers.main)
             .map { notificationMessages ->
                 consumeRecursive(notificationMessages)
                 notificationMessages.map { it.actionId }
-            }.flatMap { notificationMessages ->
+            }
+            .observeOn(Schedulers.unbounded)
+            .flatMap { notificationMessages ->
                 notificationsRepository.remove(notificationMessages)
             }
             .subscribeOn(Schedulers.unbounded)

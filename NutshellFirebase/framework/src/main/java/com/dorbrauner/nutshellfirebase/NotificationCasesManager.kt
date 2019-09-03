@@ -32,7 +32,7 @@ internal class NotificationCasesManager(private val casesProvider: NutshellFireb
             val caseMessages = notifications.filter { case.actionIds.contains(it.actionId) }
             if (caseMessages.isNotEmpty()) {
                 case.consume(caseMessages)
-                (handledNotificationsNotifier.handledNotifications as MutableLiveData).postValue(caseMessages)
+                (handledNotificationsNotifier.handledNotifications as MutableLiveData).value = caseMessages
             }
 
             caseMessages
