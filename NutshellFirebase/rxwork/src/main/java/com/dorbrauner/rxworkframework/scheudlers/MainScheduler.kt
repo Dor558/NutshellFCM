@@ -27,7 +27,4 @@ class MainScheduler: Scheduler {
         return handlerWork
     }
 
-    override fun blockingSchedule(runnable: Runnable) {
-        schedule(runnable)
-    }
 }

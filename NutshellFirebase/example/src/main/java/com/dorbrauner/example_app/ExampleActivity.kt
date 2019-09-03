@@ -16,19 +16,18 @@ class ExampleActivity : AppCompatActivity() {
     }
 
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         LocalMessagesNotifier.notify(
             NotificationMessage(
                 "Action 4",
                 NotificationType.FOREGROUND_NOTIFICATION
-            )
-        )
+            ))
     }
 
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         LocalMessagesNotifier.notifyDismiss("Action 4")
     }
 

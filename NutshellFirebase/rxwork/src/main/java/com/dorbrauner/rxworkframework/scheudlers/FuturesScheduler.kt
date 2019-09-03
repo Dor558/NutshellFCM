@@ -1,11 +1,10 @@
 package com.dorbrauner.rxworkframework.scheudlers
 
 import com.dorbrauner.rxworkframework.Cancelable
+import com.dorbrauner.rxworkframework.RxWorkerThreadFactory
+import com.dorbrauner.rxworkframework.SchedulerWorker
 import com.dorbrauner.rxworkframework.tasks.FutureTask
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
+import java.util.concurrent.*
 import java.util.concurrent.atomic.AtomicReference
 
 
@@ -13,9 +12,9 @@ class FuturesScheduler(private val type: Type) : Scheduler {
 
     private val executor = AtomicReference<ExecutorService>()
 
+    private val scheduleWorker = SchedulerWorker(RxWorkerThreadFactory("Future tasks scheduler"))
+
     companion object {
-        val SHUTDOWN: ExecutorService = Executors.newFixedThreadPool(1)
-            .apply { shutdown() }
 
         enum class Type {
             BOUNDED_CACHE,
@@ -24,16 +23,12 @@ class FuturesScheduler(private val type: Type) : Scheduler {
         }
     }
 
+    @Synchronized
     override fun start() {
         var next: ExecutorService? = null
         while (true) {
             val current = executor.get()
-            if (current != null && current != SHUTDOWN) {
-                next?.shutdown()
-                return
-            }
-
-            if (next == null) {
+            if (current == null) {
                 next = executorInstance()
             }
 
@@ -45,34 +40,35 @@ class FuturesScheduler(private val type: Type) : Scheduler {
 
     private fun executorInstance(): ExecutorService {
         return when (type) {
-            Companion.Type.BOUNDED_CACHE -> Executors.newFixedThreadPool(5)
-            Companion.Type.UNBOUNDED_CACHE ->  Executors.newCachedThreadPool()
-            Companion.Type.FIXED_SINGLE ->  Executors.newFixedThreadPool(1)
+            Companion.Type.BOUNDED_CACHE -> Executors.newFixedThreadPool(5, RxWorkerThreadFactory("Bounded"))
+            Companion.Type.UNBOUNDED_CACHE ->  Executors.newCachedThreadPool(RxWorkerThreadFactory("Unbound"))
+            Companion.Type.FIXED_SINGLE ->  Executors.newFixedThreadPool(1, RxWorkerThreadFactory("Single"))
         }
     }
 
 
+    @Synchronized
     override fun shutdown() {
-        var current = executor.get()
-        if (current != SHUTDOWN) {
-            current = executor.getAndSet(SHUTDOWN)
-            if (current != SHUTDOWN) {
+        scheduleWorker.shutdown()
+        val current: ExecutorService? = executor.get()
+        runCatching {
+            while (current?.awaitTermination(800, TimeUnit.MILLISECONDS) == false) {
                 current.shutdownNow()
             }
+
+        }.getOrElse {
+            current?.shutdownNow()
         }
     }
 
+    @Synchronized
     override fun schedule(runnable: Runnable): Cancelable {
-        val futureWork = FutureTask(runnable)
-        val future = executor.get().submit(futureWork)
-        futureWork.future = future
-        return futureWork
-    }
+        val futureRunnable = Runnable {
+            val futureWork = FutureTask(runnable)
+            val future = executor.get().submit(futureWork)
+            futureWork.future = future
+        }
 
-    override fun blockingSchedule(runnable: Runnable) {
-        val futureWork = FutureTask(runnable)
-        val future = executor.get().submit(futureWork)
-        futureWork.future = future
-        future.get()
+        return scheduleWorker.schedule(futureRunnable)
     }
 }

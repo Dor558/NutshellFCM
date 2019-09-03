@@ -3,6 +3,8 @@ package com.dorbrauner.nutshellfirebase
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.os.Handler
+import android.os.HandlerThread
 import android.util.Log
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.ACTION_BROADCAST_REGISTRATION_NOTIFICATION
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
@@ -35,7 +37,7 @@ class NotificationNotifier(
             broadcast,
             null,
             null,
-            null,
+            NutshellHandler,
             Activity.RESULT_OK,
             null,
             broadcast.extras

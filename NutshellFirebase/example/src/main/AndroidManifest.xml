@@ -14,7 +14,8 @@
                  android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
 
 
-        <activity android:name="com.dorbrauner.example_app.ExampleActivity">
+        <activity android:name="com.dorbrauner.example_app.ExampleActivity"
+                  android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -26,7 +27,7 @@
 
         <service android:name=".NutshellFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 

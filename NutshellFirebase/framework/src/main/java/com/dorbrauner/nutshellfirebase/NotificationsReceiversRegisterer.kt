@@ -34,10 +34,10 @@ internal class NotificationsReceiversRegisterer(
 
             runCatching {
                 val notificationMessage = notificationsRepository.read(actionId)
-                    .subscribeOn(Schedulers.unbounded)
-                    .observeOn(Schedulers.unbounded)
+                    .subscribeOn(Schedulers.single)
                     .blockingGet()
 
+                Log.i(TAG, "Recevied notification message $notificationMessage")
                 when (notificationMessage?.type) {
                     NotificationType.NOTIFICATION -> {
                         notificationsConsumer.consumeNotificationsMessages()

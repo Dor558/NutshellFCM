@@ -1,7 +1,7 @@
 package com.dorbrauner.nutshellfirebase
 
 import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
-import com.dorbrauner.rxworkframework.RxWork
+import com.dorbrauner.rxworkframework.RxWorkCreator
 import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 import com.dorbrauner.rxworkframework.works.ScheduledWork
 
@@ -10,7 +10,7 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
     NutshellFirebaseContract.NotificationMessageWriter {
 
     override fun write(notificationMessage: NotificationMessage): ScheduledWork<Unit> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             notificationsInteractor.writeNotification(notificationMessage)
                     .subscribeOn(Schedulers.unbounded)
                     .subscribe(
@@ -25,7 +25,7 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
     }
 
     override fun read(): ScheduledWork<List<NotificationMessage>> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             notificationsInteractor.readNotifications()
                     .subscribeOn(Schedulers.unbounded)
                     .subscribe(
@@ -40,7 +40,7 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
     }
 
     override fun read(id: String): ScheduledWork<NotificationMessage> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             notificationsInteractor
                 .readNotification(id)
                 .subscribeOn(Schedulers.unbounded)
@@ -56,7 +56,7 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
     }
 
     override fun purge(): ScheduledWork<Unit> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             notificationsInteractor
                     .purgeNotifications()
                     .subscribeOn(Schedulers.unbounded)
@@ -72,7 +72,7 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
     }
 
     override fun remove(id: String): ScheduledWork<Unit> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             notificationsInteractor
                     .removeNotification(id)
                     .subscribeOn(Schedulers.unbounded)
@@ -88,7 +88,7 @@ internal class NotificationsRepository(private val notificationsInteractor: Nuts
     }
 
     override fun remove(ids: List<String>): ScheduledWork<Unit> {
-        return RxWork.create { emitter ->
+        return RxWorkCreator.create { emitter ->
             notificationsInteractor
                 .removeNotifications(ids)
                 .subscribeOn(Schedulers.unbounded)

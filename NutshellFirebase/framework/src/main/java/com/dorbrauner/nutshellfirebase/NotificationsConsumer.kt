@@ -28,7 +28,8 @@ internal class NotificationsConsumer(
             }.flatMap {
                 notificationsRepository.remove(actionId)
             }
-            .subscribeOn(Schedulers.main)
+            .subscribeOn(Schedulers.unbounded)
+            .observeOn(Schedulers.main)
             .subscribe(
                 onResult = {
                     Log.d(TAG, "notification of id $actionId consumed")
@@ -53,7 +54,8 @@ internal class NotificationsConsumer(
             }.map { notificationMessages ->
                 notificationsRepository.remove(notificationMessages)
             }
-            .subscribeOn(Schedulers.main)
+            .subscribeOn(Schedulers.unbounded)
+            .observeOn(Schedulers.main)
             .subscribe(
                 onResult = {
                     Log.d(TAG, "all notifications consumed")

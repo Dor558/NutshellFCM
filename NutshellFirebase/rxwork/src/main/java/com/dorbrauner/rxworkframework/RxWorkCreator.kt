@@ -6,7 +6,7 @@ import com.dorbrauner.rxworkframework.works.WorkEmitter
 import com.dorbrauner.rxworkframework.works.runnables.WorkRunnable
 
 
-object RxWork {
+object RxWorkCreator {
 
     fun <T> create(workEmitterInvokable: (WorkEmitter<T>) -> Unit): ScheduledWork<T> {
         return Work(WorkRunnable(workEmitterInvokable))
