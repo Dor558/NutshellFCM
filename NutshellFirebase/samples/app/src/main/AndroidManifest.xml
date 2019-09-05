@@ -7,14 +7,14 @@
 
     <application android:allowBackup="true"
                  android:label="@string/app_name"
-                 android:name="com.dorbrauner.example_app.ExampleApplication"
+                 android:name="com.dorbrauner.sample_app.ExampleApplication"
                  android:icon="@mipmap/ic_launcher"
                  android:roundIcon="@mipmap/ic_launcher_round"
                  android:supportsRtl="true"
                  android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
 
 
-        <activity android:name="com.dorbrauner.example_app.ExampleActivity"
+        <activity android:name="com.dorbrauner.sample_app.ExampleActivity"
                   android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.dorbrauner.example_app.ExampleForegroundService"/>
+        <service android:name="com.dorbrauner.sample_app.ExampleForegroundService"/>
 
 
         <service android:name=".NutshellFirebaseMessagingService">
