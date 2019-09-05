@@ -8,6 +8,8 @@ object Schedulers {
     val single =  FuturesScheduler(FIXED_SINGLE).apply { start() }
     val unbounded =  FuturesScheduler(UNBOUNDED_CACHE).apply { start() }
     val bounded = FuturesScheduler(BOUNDED_CACHE).apply { start() }
+
+    internal val defaultScheduler = FuturesScheduler(UNBOUNDED_CACHE).apply { start() }
 }
 
 

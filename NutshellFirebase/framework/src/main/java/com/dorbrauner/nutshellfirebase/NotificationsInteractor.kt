@@ -101,7 +101,6 @@ internal class NotificationsInteractor(
             cacheSource.writeCache(notificationMessage)
             persistentSource.write(notificationMessage)
                 .subscribeOn(Schedulers.single)
-                .observeOn(Schedulers.single)
                 .subscribe(
                     onResult = {
                         emitter.onResult(Unit)

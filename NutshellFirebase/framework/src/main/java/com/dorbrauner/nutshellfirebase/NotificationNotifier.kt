@@ -19,7 +19,6 @@ class NotificationNotifier(
     override fun notifyMessage(notificationMessage: NotificationMessage) {
         notificationMessageWriter.write(notificationMessage)
             .subscribeOn(Schedulers.single)
-            .observeOn(Schedulers.single)
             .subscribe(
                 onResult = {
                     sendBroadcast(notificationMessage)

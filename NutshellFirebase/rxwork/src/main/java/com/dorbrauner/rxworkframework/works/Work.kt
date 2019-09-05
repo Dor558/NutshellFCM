@@ -14,15 +14,16 @@ internal open class Work<T>(
     final override val emittedRunnable: EmittedRunnable<T>
 ) : ScheduledWork<T>, ParentWork<T>, WorkEmitter<T> {
 
+
     protected val observers: MutableSet<Observer<T>> = mutableSetOf()
 
     protected val subscribers: MutableSet<Subscriber> = mutableSetOf()
 
     protected val cancelledObservers: MutableSet<CancelledObserver> = mutableSetOf()
 
-    final override var subscribeOnScheduler: Scheduler = Schedulers.unbounded
+    final override var subscribeOnScheduler: Scheduler = Schedulers.defaultScheduler
 
-    final override var observeOnScheduler: Scheduler = subscribeOnScheduler
+    final override var observeOnScheduler: Scheduler = Schedulers.defaultScheduler
 
     protected val isScheduled = AtomicReference<Cancelable>()
 
@@ -81,6 +82,10 @@ internal open class Work<T>(
 
     override fun subscribeOn(scheduler: Scheduler): ScheduledWork<T> {
         this.subscribeOnScheduler = scheduler
+        if (observeOnScheduler == Schedulers.defaultScheduler) {
+            observeOnScheduler = scheduler
+        }
+
         return this
     }
 

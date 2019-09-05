@@ -23,15 +23,13 @@ class FuturesScheduler(private val type: Type) : Scheduler {
     @Synchronized
     override fun start() {
         var next: ExecutorService? = null
-        while (true) {
-            val current = executor.get()
-            if (current == null) {
-                next = executorInstance()
-            }
+        val current = executor.get()
+        if (current == null) {
+            next = executorInstance()
+        }
 
-            if (executor.compareAndSet(current, next)) {
-                return
-            }
+        if (executor.compareAndSet(current, next)) {
+            return
         }
     }
 

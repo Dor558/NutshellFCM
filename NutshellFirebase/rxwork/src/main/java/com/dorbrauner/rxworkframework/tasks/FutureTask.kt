@@ -6,7 +6,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Future
 
 
-class FutureTask(private val runnable: Runnable) : Callable<Unit> , Cancelable {
+internal class FutureTask(private val runnable: Runnable) : Callable<Unit> , Cancelable {
 
     lateinit var future: Future<Unit>
 
