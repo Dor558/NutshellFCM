@@ -6,8 +6,6 @@ ext {
     junit_version = '4.12'
     test_runner_version = '1.2.0'
     espresso_version = '3.2.0'
-    room_version = '2.2.0-beta01'
-    gson_version = '2.8.2'
     android_ktx_version = '1.0.2'
     firebase_messaging = '20.0.0'
     firebase_config = '19.0.0'
@@ -19,6 +17,7 @@ ext {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':rxwork')
+    api project(':persistent_adapter')
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     testImplementation "junit:junit:$junit_version"
@@ -30,14 +29,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_runtime_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_runtime_version"
 
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    implementation "androidx.room:room-guava:$room_version"
     implementation "androidx.core:core-ktx:$android_ktx_version"
     implementation "com.google.firebase:firebase-messaging:$firebase_messaging"
     implementation "com.google.firebase:firebase-config:$firebase_config"
     implementation "com.google.firebase:firebase-crash:$firebase_crash"
     implementation "com.google.firebase:firebase-core:$firebase_core"
-    implementation "com.google.code.gson:gson:$gson_version"
 }

@@ -6,7 +6,7 @@ import android.util.Log
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.*
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Error.*
 import com.dorbrauner.nutshellfirebase.application.contexts.ApplicationContext
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 import com.dorbrauner.nutshellfirebase.extensions.TAG
 import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 

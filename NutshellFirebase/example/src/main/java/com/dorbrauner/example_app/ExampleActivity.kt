@@ -7,7 +7,7 @@ import com.dorbrauner.nutshellfirebase.LocalMessagesNotifier
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
 import com.dorbrauner.nutshellfirebase.NutshellNotificationHandler
 import com.dorbrauner.nutshellfirebase.R
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 import kotlinx.android.synthetic.main.example_activity_layout.*
 
 

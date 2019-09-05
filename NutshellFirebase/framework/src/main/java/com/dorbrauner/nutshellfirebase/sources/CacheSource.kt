@@ -1,7 +1,7 @@
 package com.dorbrauner.nutshellfirebase.sources
 
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 
 class CacheSource : NutshellFirebaseContract.Sources.CacheSource {
 

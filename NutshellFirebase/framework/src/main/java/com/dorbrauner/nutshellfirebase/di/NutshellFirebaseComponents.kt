@@ -4,15 +4,13 @@ import android.app.Application
 import android.app.NotificationManager
 import com.dorbrauner.nutshellfirebase.NotificationsReceiversRegisterer
 import com.dorbrauner.nutshellfirebase.application.ApplicationLifeCycleWrapper
-import com.dorbrauner.nutshellfirebase.database.Database
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
+import com.dorbrauner.persistentadapters.PersistentAdapterContract
 
 
 internal object NutshellFirebaseComponents {
 
-    lateinit var database: Database
     lateinit var cacheSource: NutshellFirebaseContract.Sources.CacheSource
-    lateinit var persistentSource: NutshellFirebaseContract.Sources.PersistentSource
     lateinit var notificationsInteractor: NutshellFirebaseContract.Interactor
     lateinit var notificationsRepository: NutshellFirebaseContract.Repository
     lateinit var notificationsMessageRouter: NutshellFirebaseContract.NotificationsMessageRouter
@@ -27,18 +25,23 @@ internal object NutshellFirebaseComponents {
     lateinit var notificationsReceiversRegisterer: NotificationsReceiversRegisterer
     lateinit var androidNotificationsFactory: NutshellFirebaseContract.AndroidNotificationsFactory
     lateinit var handledNotificationsNotifier: NutshellFirebaseContract.NotificationsHandling.HandledNotificationsNotifier
+    lateinit var persistedMessageToNotificationMessageConverter: NutshellFirebaseContract.Sources.PersistedSource.PersistedMessageToNotificationMessageConverter
+    var persistedSource: NutshellFirebaseContract.Sources.PersistedSource? = null
 
     fun init(application: Application,
              notificationsFactory: NutshellFirebaseContract.AndroidNotificationsFactory,
              casesProvider: NutshellFirebaseContract.NotificationsHandling.CasesProvider,
-             foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder): Boolean {
+             foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder,
+             persistentAdapter: PersistentAdapterContract.Adapter?): Boolean {
         val applicationContext = Injections.provideApplicationContext(application)
         androidNotificationsFactory = notificationsFactory
-        database = Injections.provideDatabase(application)
         systemNotificationManager = Injections.provideNotificationsManager(application)
         cacheSource = Injections.provideCacheSource()
-        persistentSource = Injections.providePersistentSource(database)
-        notificationsInteractor = Injections.provideNotificationInteractor(persistentSource, cacheSource)
+        persistedMessageToNotificationMessageConverter = Injections.providePersistetMessageToNotificaitonMessageConverter()
+        persistentAdapter?.let {
+            persistedSource = Injections.providePersistentSource(persistentAdapter, persistedMessageToNotificationMessageConverter)
+        }
+        notificationsInteractor = Injections.provideNotificationInteractor(persistedSource, cacheSource)
         notificationsRepository = Injections.provideNotificationRepository(notificationsInteractor)
         importanceTranslator = Injections.provideImpotenceTranslator()
         notificationsManager = Injections.provideNotificationsManager(systemNotificationManager, importanceTranslator)

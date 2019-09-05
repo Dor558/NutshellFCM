@@ -1,36 +1,39 @@
 package com.dorbrauner.nutshellfirebase
 
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 import com.dorbrauner.rxworkframework.RxWorkCreator
 import com.dorbrauner.rxworkframework.scheudlers.Schedulers
 import com.dorbrauner.rxworkframework.works.ScheduledWork
 
 
 internal class NotificationsInteractor(
-    private val persistentSource: NutshellFirebaseContract.Sources.PersistentSource,
+    private val persistedSource: NutshellFirebaseContract.Sources.PersistedSource?,
     private val cacheSource: NutshellFirebaseContract.Sources.CacheSource
 ) : NutshellFirebaseContract.Interactor {
 
     override fun purgeNotifications(): ScheduledWork<Unit> {
         return RxWorkCreator.create { emitter ->
             cacheSource.clearCache()
-            persistentSource.purge()
-                .subscribe(
-                    onResult = {
-                        emitter.onResult(Unit)
-                    },
-                    onError = {
-                        emitter.onError(it)
-                    }
-                )
+            persistedSource?.apply {
+                purge()
+                    .subscribe(
+                        onResult = {
+                            emitter.onResult(Unit)
+                        },
+                        onError = {
+                            emitter.onError(it)
+                        }
+                    )
+            }
+
         }
     }
 
     override fun removeNotification(id: String): ScheduledWork<Unit> {
         return RxWorkCreator.create { emitter ->
             cacheSource.removeFromCache(id)
-            persistentSource.remove(id)
-                .subscribe(
+            persistedSource?.apply {
+                remove(id).subscribe(
                     onResult = {
                         emitter.onResult(Unit)
                     },
@@ -38,21 +41,24 @@ internal class NotificationsInteractor(
                         emitter.onError(it)
                     }
                 )
+            }
         }
     }
 
     override fun removeNotifications(ids: List<String>): ScheduledWork<Unit> {
         return RxWorkCreator.create { emitter ->
             cacheSource.removeFromCache(ids)
-            persistentSource.remove(ids)
-                .subscribe(
-                    onResult = {
-                        emitter.onResult(Unit)
-                    },
-                    onError = {
-                        emitter.onError(it)
-                    }
-                )
+            persistedSource?.apply {
+                remove(ids)
+                    .subscribe(
+                        onResult = {
+                            emitter.onResult(Unit)
+                        },
+                        onError = {
+                            emitter.onError(it)
+                        }
+                    )
+            }
         }
     }
 
@@ -64,15 +70,17 @@ internal class NotificationsInteractor(
                 return@create
             }
 
-            persistentSource.read(id)
-                .subscribe(
-                    onResult = {
-                        emitter.onResult(it)
-                    },
-                    onError = {
-                        emitter.onError(it)
-                    }
-                )
+            persistedSource?.apply {
+                read(id)
+                    .subscribe(
+                        onResult = {
+                            emitter.onResult(it)
+                        },
+                        onError = {
+                            emitter.onError(it)
+                        }
+                    )
+            }
         }
     }
 
@@ -84,31 +92,35 @@ internal class NotificationsInteractor(
                 return@create
             }
 
-            persistentSource.read()
-                .subscribe(
-                    onResult = {
-                        emitter.onResult(it)
-                    },
-                    onError = {
-                        emitter.onError(it)
-                    }
-                )
+            persistedSource?.apply {
+                read()
+                    .subscribe(
+                        onResult = {
+                            emitter.onResult(it)
+                        },
+                        onError = {
+                            emitter.onError(it)
+                        }
+                    )
+            }
         }
     }
 
     override fun writeNotification(notificationMessage: NotificationMessage): ScheduledWork<Unit> {
         return RxWorkCreator.create { emitter ->
             cacheSource.writeCache(notificationMessage)
-            persistentSource.write(notificationMessage)
-                .subscribeOn(Schedulers.single)
-                .subscribe(
-                    onResult = {
-                        emitter.onResult(Unit)
-                    },
-                    onError = {
-                        emitter.onError(it)
-                    }
-                )
+            persistedSource?.apply {
+                write(notificationMessage)
+                    .subscribeOn(Schedulers.single)
+                    .subscribe(
+                        onResult = {
+                            emitter.onResult(Unit)
+                        },
+                        onError = {
+                            emitter.onError(it)
+                        }
+                    )
+            } ?: emitter.onResult(Unit)
         }
     }
 }

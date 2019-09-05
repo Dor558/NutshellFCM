@@ -1,7 +1,7 @@
 package com.dorbrauner.example_app.notifications_use_cases
 
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 
 
 class Action2Action3ExampleCase : NutshellFirebaseContract.NotificationsHandling.Case {

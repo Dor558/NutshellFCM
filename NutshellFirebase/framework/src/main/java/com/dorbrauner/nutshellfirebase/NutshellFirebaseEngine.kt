@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.dorbrauner.nutshellfirebase.di.NutshellFirebaseComponents
 import com.dorbrauner.nutshellfirebase.extensions.TAG
+import com.dorbrauner.persistentadapters.PersistentAdapterContract
 import com.google.firebase.iid.FirebaseInstanceId
 
 
@@ -19,7 +20,9 @@ object NutshellFirebaseEngine {
     fun start(application: Application,
               androidNotificationsFactory: NutshellFirebaseContract.AndroidNotificationsFactory,
               casesProvider: NutshellFirebaseContract.NotificationsHandling.CasesProvider,
-              foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder = DefaultForegroundServicesBinder()) {
+              foregroundServicesBinder: NutshellFirebaseContract.ForegroundServicesBinder = DefaultForegroundServicesBinder(),
+              persistentAdapter: PersistentAdapterContract.Adapter? = null
+    ) {
 
         if (isInitialized) {
             return
@@ -29,7 +32,8 @@ object NutshellFirebaseEngine {
             application,
             androidNotificationsFactory,
             casesProvider,
-            foregroundServicesBinder
+            foregroundServicesBinder,
+            persistentAdapter
         )
 
         firebaseInstanceId.instanceId.addOnSuccessListener { instanceIdResult ->

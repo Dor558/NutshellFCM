@@ -7,7 +7,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
+import com.dorbrauner.persistentadapters.PersistentAdapterContract
+import com.dorbrauner.persistentadapters.PersistentAdapterContract.*
 import com.dorbrauner.rxworkframework.works.ScheduledWork
 
 interface NutshellFirebaseContract {
@@ -46,11 +48,7 @@ interface NutshellFirebaseContract {
 
     interface Sources {
 
-        interface PersistentSource {
-
-            companion object {
-                const val ROOM_TABLE_NOTIFICATION_MESSAGE = "notification_messages"
-            }
+        interface PersistedSource {
 
             fun purge(): ScheduledWork<Unit>
             fun remove(id: String): ScheduledWork<Unit>
@@ -58,6 +56,14 @@ interface NutshellFirebaseContract {
             fun read(): ScheduledWork<List<NotificationMessage>>
             fun read(id: String): ScheduledWork<NotificationMessage>
             fun write(notificationMessage: NotificationMessage): ScheduledWork<Unit>
+
+            interface PersistedMessageToNotificationMessageConverter {
+
+                fun convert(persistNotificationMessage: PersistNotificationMessage): NotificationMessage
+                fun convert(persistNotificationMessages: List<PersistNotificationMessage>): List<NotificationMessage>
+                fun convertBack(notificationMessage: NotificationMessage): PersistNotificationMessage
+                fun convertBack(notificationMessages: List<NotificationMessage>): List<PersistNotificationMessage>
+            }
 
         }
 

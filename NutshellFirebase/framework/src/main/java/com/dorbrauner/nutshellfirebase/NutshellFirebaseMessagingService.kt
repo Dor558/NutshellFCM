@@ -8,7 +8,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.KEY_ACTION_ID
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.KEY_TYPE
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.NotificationType.Companion.NotificationType
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 import java.util.*
 
 

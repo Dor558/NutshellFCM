@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_RECEIVER_FOREGROUND
 import android.util.Log
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Companion.ACTION_BROADCAST_REGISTRATION_NOTIFICATION
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 import com.dorbrauner.nutshellfirebase.extensions.TAG
 import com.dorbrauner.nutshellfirebase.extensions.toBundle
 import com.dorbrauner.rxworkframework.scheudlers.Schedulers

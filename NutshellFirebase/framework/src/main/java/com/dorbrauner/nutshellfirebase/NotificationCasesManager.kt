@@ -2,7 +2,7 @@ package com.dorbrauner.nutshellfirebase
 
 import androidx.lifecycle.MutableLiveData
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.NotificationsHandling.Case
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 
 internal class NotificationCasesManager(private val casesProvider: NutshellFirebaseContract.NotificationsHandling.CasesProvider,
                                         private val handledNotificationsNotifier: NutshellFirebaseContract.NotificationsHandling.HandledNotificationsNotifier):

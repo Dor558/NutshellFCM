@@ -3,8 +3,8 @@ package com.dorbrauner.example_app
 import android.app.Application
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseEngine
 
-
 class ExampleApplication : Application() {
+
 
     override fun onCreate() {
         super.onCreate()
@@ -13,5 +13,6 @@ class ExampleApplication : Application() {
                             ExampleCaseProvider(),
                             ExampleForegroundServicesBinder())
     }
+
 
 }

@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.core.os.bundleOf
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract.Error.UnknownServiceBindActionIdThrowable
 import com.dorbrauner.nutshellfirebase.application.contexts.ApplicationContext
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 
 
 internal class AndroidNotificationBuilder(

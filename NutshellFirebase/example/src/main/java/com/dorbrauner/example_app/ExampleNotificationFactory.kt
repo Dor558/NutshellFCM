@@ -4,7 +4,7 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 
 
 class ExampleNotificationFactory(private val application: Application) : NutshellFirebaseContract.AndroidNotificationsFactory {

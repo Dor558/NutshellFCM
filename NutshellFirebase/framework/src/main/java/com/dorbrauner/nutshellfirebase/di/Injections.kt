@@ -3,16 +3,14 @@ package com.dorbrauner.nutshellfirebase.di
 import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
-import androidx.room.Room
 import com.dorbrauner.nutshellfirebase.*
 import com.dorbrauner.nutshellfirebase.application.ApplicationLifeCycleWrapper
 import com.dorbrauner.nutshellfirebase.application.contexts.ApplicationContext
-import com.dorbrauner.nutshellfirebase.database.Database
-import com.dorbrauner.nutshellfirebase.database.DATABASE_NAME
 import com.dorbrauner.nutshellfirebase.ImportanceTranslator
 import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
 import com.dorbrauner.nutshellfirebase.sources.CacheSource
-import com.dorbrauner.nutshellfirebase.sources.PersistentSource
+import com.dorbrauner.nutshellfirebase.sources.PersistedSource
+import com.dorbrauner.persistentadapters.PersistentAdapterContract
 
 
 internal object Injections {
@@ -25,14 +23,14 @@ internal object Injections {
         return application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    fun provideDatabase(application: Application): Database {
-        return Room.databaseBuilder(application, Database::class.java, DATABASE_NAME)
-            .fallbackToDestructiveMigration()
-            .build()
+    fun providePersistetMessageToNotificaitonMessageConverter(): NutshellFirebaseContract.Sources.PersistedSource.PersistedMessageToNotificationMessageConverter {
+        return PersistedMessageToNotificationMessageConverter()
     }
 
-    fun providePersistentSource(roomDatabase: Database): NutshellFirebaseContract.Sources.PersistentSource {
-        return PersistentSource(roomDatabase)
+    fun providePersistentSource(
+        persistedAdapter: PersistentAdapterContract.Adapter,
+        converter: NutshellFirebaseContract.Sources.PersistedSource.PersistedMessageToNotificationMessageConverter): NutshellFirebaseContract.Sources.PersistedSource? {
+        return PersistedSource(persistedAdapter, converter)
     }
 
     fun provideCacheSource(): NutshellFirebaseContract.Sources.CacheSource {
@@ -40,10 +38,10 @@ internal object Injections {
     }
 
     fun provideNotificationInteractor(
-        persistentSource: NutshellFirebaseContract.Sources.PersistentSource,
+        persistedSource: NutshellFirebaseContract.Sources.PersistedSource?,
         cacheSource: NutshellFirebaseContract.Sources.CacheSource
     ): NutshellFirebaseContract.Interactor {
-        return NotificationsInteractor(persistentSource, cacheSource)
+        return NotificationsInteractor(persistedSource, cacheSource)
     }
 
     fun provideNotificationRepository(notificationsInteractor: NutshellFirebaseContract.Interactor): NutshellFirebaseContract.Repository {

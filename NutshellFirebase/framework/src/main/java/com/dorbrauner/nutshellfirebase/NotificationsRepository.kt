@@ -1,6 +1,6 @@
 package com.dorbrauner.nutshellfirebase
 
-import com.dorbrauner.nutshellfirebase.database.model.NotificationMessage
+import com.dorbrauner.nutshellfirebase.model.NotificationMessage
 import com.dorbrauner.rxworkframework.works.ScheduledWork
 
 internal class NotificationsRepository(private val notificationsInteractor: NutshellFirebaseContract.Interactor) :

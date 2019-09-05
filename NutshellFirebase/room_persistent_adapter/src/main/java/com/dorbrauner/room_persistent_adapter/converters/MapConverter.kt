@@ -1,4 +1,4 @@
-package com.dorbrauner.nutshellfirebase.database.converters
+package com.dorbrauner.room_persistent_adapter.converters
 
 import androidx.room.TypeConverter
 import com.google.common.reflect.TypeToken
