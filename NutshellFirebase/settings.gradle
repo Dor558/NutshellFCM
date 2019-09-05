@@ -1,1 +1,2 @@
-include ':example', ':framework', ':rxwork', ':persistent_adapter', ':room_persistent_adapter'
+include ':example', ':framework', ':persistent_adapter', ':room_persistent_adapter', ':rxwork'
+project(':rxwork').projectDir = file('rxworker/rxwork')
