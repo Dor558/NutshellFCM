@@ -17,7 +17,7 @@ ext {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':rxwork')
-    api project(':persistent_adapter')
+    api project(':persistent-adapter')
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     testImplementation "junit:junit:$junit_version"
