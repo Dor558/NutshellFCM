@@ -1,9 +1,9 @@
 package com.dorbrauner.sample_app
 
-import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
+import com.dorbrauner.nutshellfcm.NutshellFCMContract
 
 
-class ExampleForegroundServicesBinder : NutshellFirebaseContract.ForegroundServicesBinder {
+class ExampleForegroundServicesBinder : NutshellFCMContract.ForegroundServicesBinder {
 
     override fun bind(actionId: String): Class<*>? {
         return when (actionId) {

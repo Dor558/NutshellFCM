@@ -3,11 +3,11 @@ package com.dorbrauner.sample_app
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.dorbrauner.nutshellfirebase.LocalMessagesNotifier
-import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
-import com.dorbrauner.nutshellfirebase.NutshellNotificationHandler
-import com.dorbrauner.nutshellfirebase.R
-import com.dorbrauner.nutshellfirebase.model.NotificationMessage
+import com.dorbrauner.nutshellfcm.LocalMessagesNotifier
+import com.dorbrauner.nutshellfcm.NutshellFCMContract
+import com.dorbrauner.nutshellfcm.NutshellNotificationHandler
+import com.dorbrauner.nutshellfcm.R
+import com.dorbrauner.nutshellfcm.model.NotificationMessage
 import kotlinx.android.synthetic.main.example_activity_layout.*
 
 
@@ -36,7 +36,7 @@ class ExampleActivity : AppCompatActivity() {
         LocalMessagesNotifier.notify(
             NotificationMessage(
                 "Action 4",
-                NutshellFirebaseContract.NotificationType.FOREGROUND_NOTIFICATION
+                NutshellFCMContract.NotificationType.FOREGROUND_NOTIFICATION
             )
         )
     }

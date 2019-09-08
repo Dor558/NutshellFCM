@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.dorbrauner.nutshellfirebase">
+          package="com.dorbrauner.nutshellfcm">
 
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
@@ -25,7 +25,7 @@
         <service android:name="com.dorbrauner.sample_app.ExampleForegroundService"/>
 
 
-        <service android:name=".NutshellFirebaseMessagingService">
+        <service android:name="com.dorbrauner.nutshellfcm.NutshellFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

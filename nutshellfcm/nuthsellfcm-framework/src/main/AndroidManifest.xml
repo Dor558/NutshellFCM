@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.dorbrauner.nutshellfirebase">
+          package="com.dorbrauner.nutshellfcm">
 
     <application android:allowBackup="true"
                  android:label="@string/app_name">
 
         <service
-                android:name="com.dorbrauner.nutshellfirebase.SilentNotificationHandleService"
+                android:name="com.dorbrauner.nutshellfcm.SilentNotificationHandleService"
                 android:exported="false"
                 android:permission="android.permission.BIND_JOB_SERVICE" />
 

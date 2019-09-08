@@ -1,10 +1,10 @@
 package com.dorbrauner.sample_app.notifications_use_cases
 
-import com.dorbrauner.nutshellfirebase.NutshellFirebaseContract
-import com.dorbrauner.nutshellfirebase.model.NotificationMessage
+import com.dorbrauner.nutshellfcm.NutshellFCMContract
+import com.dorbrauner.nutshellfcm.model.NotificationMessage
 
 
-class Action2Action3ExampleCase : NutshellFirebaseContract.NotificationsHandling.Case {
+class Action2Action3ExampleCase : NutshellFCMContract.NotificationsHandling.Case {
 
     override val actionIds: List<String> = listOf("Action 2", "Action 3")
 
