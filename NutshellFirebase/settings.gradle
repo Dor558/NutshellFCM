@@ -1,3 +1,0 @@
-include ':app', ':framework', ':persistent-adapter', ':room-persistent-adapter', ':rxwork'
-project(':rxwork').projectDir = file('rxworker/rxwork')
-project(':app').projectDir = file('samples/app')

@@ -1,0 +1,85 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply from: '../versions.gradle'
+
+android {
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion = '28.0.3'
+
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+apply from: rootProject.file('gradle/android_mvn_push.gradle')
+
+afterEvaluate {
+    javadoc.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+    }
+}
+
+ext {
+    appcompat_version = '1.0.2'
+    lifecycle_extenstions_version = '2.0.0'
+    lifecycle_runtime_version = '2.0.0'
+    junit_version = '4.12'
+    test_runner_version = '1.2.0'
+    espresso_version = '3.2.0'
+    android_ktx_version = '1.0.2'
+    firebase_messaging = '20.0.0'
+    firebase_config = '19.0.0'
+    firebase_crash = '16.2.1'
+    firebase_core = '17.1.0'
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':rxworker')
+    api project(':nuthsellfcm-common')
+
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test:runner:$test_runner_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extenstions_version"
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_runtime_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_runtime_version"
+
+    implementation "androidx.core:core-ktx:$android_ktx_version"
+    implementation "com.google.firebase:firebase-messaging:$firebase_messaging"
+    implementation "com.google.firebase:firebase-config:$firebase_config"
+    implementation "com.google.firebase:firebase-crash:$firebase_crash"
+    implementation "com.google.firebase:firebase-core:$firebase_core"
+}
