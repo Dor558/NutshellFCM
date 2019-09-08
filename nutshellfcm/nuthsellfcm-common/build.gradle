@@ -13,18 +13,6 @@ android {
         versionCode VERSION_CODE
         versionName VERSION_NAME
     }
-
-    buildTypes {
-        debug {
-            debuggable true
-            minifyEnabled false
-        }
-        release {
-            debuggable false
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
 }
 
 apply from: rootProject.file('gradle/android_mvn_push.gradle')
