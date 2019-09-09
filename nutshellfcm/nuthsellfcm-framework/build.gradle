@@ -78,8 +78,8 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_runtime_version"
 
     implementation "androidx.core:core-ktx:$android_ktx_version"
-    implementation "com.google.firebase:firebase-messaging:$firebase_messaging"
-    implementation "com.google.firebase:firebase-config:$firebase_config"
-    implementation "com.google.firebase:firebase-crash:$firebase_crash"
-    implementation "com.google.firebase:firebase-core:$firebase_core"
+    api "com.google.firebase:firebase-messaging:$firebase_messaging"
+    api "com.google.firebase:firebase-config:$firebase_config"
+    api "com.google.firebase:firebase-crash:$firebase_crash"
+    api "com.google.firebase:firebase-core:$firebase_core"
 }
