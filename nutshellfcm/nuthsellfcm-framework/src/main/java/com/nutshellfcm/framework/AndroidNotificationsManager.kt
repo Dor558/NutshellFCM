@@ -11,13 +11,14 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.nutshellfcm.framework.extensions.toBundle
+import com.nutshellfcm.framework.model.AndroidNotification
 
 internal class AndroidNotificationsManager(private val notificationManager: NotificationManager,
                                                 private val importanceTranslator: NutshellFCMContract.Translators.ImportanceTranslator
 )
     : NutshellFCMContract.AndroidNotificationsManager {
 
-    override fun show(context: Context, androidNotification: NutshellFCMContract.AndroidNotification) {
+    override fun show(context: Context, id: Int, androidNotification: AndroidNotification) {
         val extras = androidNotification.payload.toBundle()
 
 
@@ -53,11 +54,11 @@ internal class AndroidNotificationsManager(private val notificationManager: Noti
             }
         }
 
-        notificationManager.notify(androidNotification.id, builder.build())
+        notificationManager.notify(id, builder.build())
     }
 
 
-    override fun showForeground(service: Service, androidNotification: NutshellFCMContract.AndroidNotification) {
+    override fun showForeground(service: Service, id: Int, androidNotification: AndroidNotification) {
         val notificationBuilder = NotificationCompat.Builder(service, "default_importance")
                 .setContentTitle(androidNotification.contentTitle)
                 .setContentText(androidNotification.contentText)
@@ -78,7 +79,7 @@ internal class AndroidNotificationsManager(private val notificationManager: Noti
         }
 
 
-        service.startForeground(androidNotification.id, notificationBuilder.build())
+        service.startForeground(id, notificationBuilder.build())
     }
 
 

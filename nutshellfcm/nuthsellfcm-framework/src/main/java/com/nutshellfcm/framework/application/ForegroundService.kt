@@ -28,7 +28,7 @@ abstract class ForegroundService : Service() {
             .subscribe(
                 onResult = { notificationMessage ->
                     val androidNotification = androidNotificationsFactory.create(notificationMessage)
-                    androidNotificationsManager.showForeground(this, androidNotification)
+                    androidNotificationsManager.showForeground(this, notificationMessage.notificationId, androidNotification)
                     onForegroundStarted(notificationMessage.payload.toBundle())
                 },
 

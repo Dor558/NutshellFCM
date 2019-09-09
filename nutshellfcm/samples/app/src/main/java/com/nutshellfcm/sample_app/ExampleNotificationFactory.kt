@@ -1,19 +1,20 @@
 package com.nutshellfcm.sample_app
 
+
 import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
+import com.nutshellfcm.framework.model.AndroidNotification
 import com.nutshellfcm.framework.NutshellFCMContract
 import com.nutshellfcm.framework.model.NotificationMessage
 
 
 class ExampleNotificationFactory(private val application: Application) : NutshellFCMContract.AndroidNotificationsFactory {
 
-    override fun create(notificationMessage: NotificationMessage): NutshellFCMContract.AndroidNotification {
+    override fun create(notificationMessage: NotificationMessage): AndroidNotification {
         return when (notificationMessage.actionId) {
             "Action 1" -> {
-                NutshellFCMContract.AndroidNotification(
-                    id = notificationMessage.notificationId,
+                AndroidNotification(
                     payload = notificationMessage.payload,
                     contentIntent = PendingIntent.getActivity(
                         application,
@@ -25,15 +26,16 @@ class ExampleNotificationFactory(private val application: Application) : Nutshel
                     contentText = "This is an example content",
                     importance = NutshellFCMContract.Importance.HIGH,
                     smallIcon = android.R.drawable.gallery_thumb,
-                    channel = NutshellFCMContract.NotificationChannel("example channel id",
+                    channel = NutshellFCMContract.NotificationChannel(
+                        "example channel id",
                         "example channel",
-                        null)
+                        null
+                    )
                 )
             }
 
             "Action 2" -> {
-                NutshellFCMContract.AndroidNotification(
-                    id = notificationMessage.notificationId,
+                AndroidNotification(
                     payload = notificationMessage.payload,
                     contentIntent = PendingIntent.getActivity(
                         application,
@@ -45,15 +47,16 @@ class ExampleNotificationFactory(private val application: Application) : Nutshel
                     contentText = "This is an example content",
                     importance = NutshellFCMContract.Importance.HIGH,
                     smallIcon = android.R.drawable.gallery_thumb,
-                    channel = NutshellFCMContract.NotificationChannel("example channel id",
+                    channel = NutshellFCMContract.NotificationChannel(
+                        "example channel id",
                         "example channel",
-                        null)
+                        null
+                    )
                 )
             }
 
             "Action 3" -> {
-                NutshellFCMContract.AndroidNotification(
-                    id = notificationMessage.notificationId,
+                AndroidNotification(
                     payload = notificationMessage.payload,
                     contentIntent = PendingIntent.getActivity(
                         application,
@@ -65,15 +68,16 @@ class ExampleNotificationFactory(private val application: Application) : Nutshel
                     contentText = "This is an example content",
                     importance = NutshellFCMContract.Importance.HIGH,
                     smallIcon = android.R.drawable.gallery_thumb,
-                    channel = NutshellFCMContract.NotificationChannel("example channel id",
+                    channel = NutshellFCMContract.NotificationChannel(
+                        "example channel id",
                         "example channel",
-                        null)
+                        null
+                    )
                 )
             }
 
             "Action 4" -> {
-                NutshellFCMContract.AndroidNotification(
-                    id = notificationMessage.notificationId,
+                AndroidNotification(
                     payload = notificationMessage.payload,
                     contentIntent = PendingIntent.getActivity(
                         application,
@@ -85,9 +89,11 @@ class ExampleNotificationFactory(private val application: Application) : Nutshel
                     contentText = "This is an example content",
                     importance = NutshellFCMContract.Importance.HIGH,
                     smallIcon = android.R.drawable.gallery_thumb,
-                    channel = NutshellFCMContract.NotificationChannel("example channel id",
+                    channel = NutshellFCMContract.NotificationChannel(
+                        "example channel id",
                         "example channel",
-                        null)
+                        null
+                    )
                 )
             }
 

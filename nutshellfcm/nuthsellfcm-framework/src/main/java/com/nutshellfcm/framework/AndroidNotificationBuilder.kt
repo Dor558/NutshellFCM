@@ -17,13 +17,19 @@ internal class AndroidNotificationBuilder(
 
     override fun build(notificationMessage: NotificationMessage) {
         val androidNotification = notificationsFactory.create(notificationMessage)
-        notificationManager.show(applicationContext.get(), androidNotification)
+        notificationManager.show(
+            applicationContext.get(),
+            notificationMessage.notificationId,
+            androidNotification
+        )
     }
 
     override fun buildForeground(notificationMessage: NotificationMessage) {
         val intent = Intent(
             applicationContext.get(),
-            foregroundServicesBinder.bind(notificationMessage.actionId) ?: throw UnknownServiceBindActionIdThrowable(notificationMessage.actionId)
+            foregroundServicesBinder.bind(notificationMessage.actionId) ?: throw UnknownServiceBindActionIdThrowable(
+                notificationMessage.actionId
+            )
         )
         val extras = bundleOf(NutshellFCMContract.KEY_ACTION_ID to notificationMessage.actionId)
         intent.putExtras(extras)

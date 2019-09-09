@@ -1,22 +1,19 @@
 package com.nutshellfcm.framework
 
-import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.nutshellfcm.framework.model.NotificationMessage
 import com.nutshellfcm.common.PersistentAdapterContract.*
+import com.nutshellfcm.framework.model.AndroidNotification
 import com.nutshellfcm.rxworkframework.works.ScheduledWork
 
 interface NutshellFCMContract {
 
     companion object {
         const val KEY_ACTION_ID = "action_id"
-        const val KEY_TIMESTAMP = "timestamp"
-        const val KEY_PAYLOAD = "payload"
         const val KEY_TYPE = "type"
         const val ACTION_BROADCAST_REGISTRATION_NOTIFICATION = "ACTION_BROADCAST_REGISTRATION_NOTIFICATION"
     }
@@ -117,8 +114,12 @@ interface NutshellFCMContract {
     }
 
     interface AndroidNotificationsManager {
-        fun show(context: Context, androidNotification: AndroidNotification)
-        fun showForeground(service: Service, androidNotification: AndroidNotification)
+        fun show(context: Context,
+                 id: Int,
+                 androidNotification: AndroidNotification)
+        fun showForeground(service: Service,
+                           id: Int,
+                           androidNotification: AndroidNotification)
     }
 
     interface AndroidNotificationsFactory {
@@ -142,20 +143,6 @@ interface NutshellFCMContract {
         }
 
     }
-
-    data class AndroidNotification(
-        val id: Int,
-        val payload: Map<String, String> = emptyMap(),
-        val contentTitle: CharSequence,
-        val contentText: CharSequence,
-        val color: Int = -1,
-        val largeIcon: Bitmap? = null,
-        val smallIcon: Int,
-        val contentIntent: PendingIntent? = null,
-        val deleteIntent: PendingIntent? = null,
-        val importance: Importance,
-        val channel: NotificationChannel
-    )
 
     enum class Importance {
         LOW,
