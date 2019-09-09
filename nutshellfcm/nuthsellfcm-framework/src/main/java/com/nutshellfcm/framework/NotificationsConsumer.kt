@@ -15,7 +15,7 @@ internal class NotificationsConsumer(
     private val systemNotificationManager: NotificationManager,
     private val notificationsRepository: Repository,
     private val foregroundServicesBinder: ForegroundServicesBinder,
-    private val casesManager: NotificationsHandling.CasesManager
+    private val casesManager: CasesManager
 ) : NutshellFCMContract.NotificationsConsumer {
 
 

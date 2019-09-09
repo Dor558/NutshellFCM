@@ -4,7 +4,7 @@ import com.nutshellfcm.framework.NutshellFCMContract
 import com.nutshellfcm.framework.model.NotificationMessage
 
 
-class Action4ExampleCase : NutshellFCMContract.NotificationsHandling.Case {
+class Action4ExampleCase : NutshellFCMContract.Case {
 
     override val actionIds: List<String> = listOf("Action 4")
 

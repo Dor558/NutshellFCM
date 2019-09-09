@@ -5,8 +5,8 @@ import com.nutshellfcm.sample_app.notifications_use_cases.Action2Action3ExampleC
 import com.nutshellfcm.sample_app.notifications_use_cases.Action4ExampleCase
 import com.nutshellfcm.framework.NutshellFCMContract
 
-class ExampleCaseProvider : NutshellFCMContract.NotificationsHandling.CasesProvider {
+class ExampleCaseProvider : NutshellFCMContract.CasesProvider {
 
-    override val cases: List<NutshellFCMContract.NotificationsHandling.Case> =
+    override val cases: List<NutshellFCMContract.Case> =
         listOf(Action1ExampleCase(), Action2Action3ExampleCase(), Action4ExampleCase())
 }

@@ -18,8 +18,8 @@ object NutshellFCMEngine {
     val firebaseInstanceId = FirebaseInstanceId.getInstance()
 
     fun start(application: Application,
-              androidNotificationsFactory: NutshellFCMContract.AndroidNotificationsFactory,
-              casesProvider: NutshellFCMContract.NotificationsHandling.CasesProvider,
+              androidNotificationsFactory: NutshellFCMContract.AndroidNotificationsFactory = DefaultNotificationFactory(),
+              casesProvider: NutshellFCMContract.CasesProvider = DefaultCaseProvider(),
               foregroundServicesBinder: NutshellFCMContract.ForegroundServicesBinder = DefaultForegroundServicesBinder(),
               persistentAdapter: PersistentAdapterContract.Adapter? = null
     ) {

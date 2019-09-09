@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.nutshellfcm.framework.model.NotificationMessage
 
 
-object NutshellNotificationHandler : NutshellFCMContract.NotificationsHandling.HandledNotificationsNotifier {
+object NutshellNotificationHandler : NutshellFCMContract.HandledNotificationsNotifier {
 
     override val handledNotifications: LiveData<List<NotificationMessage>> = MutableLiveData()
 }

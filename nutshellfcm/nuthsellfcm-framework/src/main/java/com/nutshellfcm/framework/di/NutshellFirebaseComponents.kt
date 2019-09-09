@@ -21,16 +21,16 @@ internal object NutshellFirebaseComponents {
     lateinit var notificationNotifier: NutshellFCMContract.NotificationsNotifier
     lateinit var notificationsWriter: NutshellFCMContract.NotificationMessageWriter
     lateinit var notificationsConsumer: NutshellFCMContract.NotificationsConsumer
-    lateinit var casesManager: NutshellFCMContract.NotificationsHandling.CasesManager
+    lateinit var casesManager: NutshellFCMContract.CasesManager
     lateinit var notificationsReceiversRegisterer: NotificationsReceiversRegisterer
     lateinit var androidNotificationsFactory: NutshellFCMContract.AndroidNotificationsFactory
-    lateinit var handledNotificationsNotifier: NutshellFCMContract.NotificationsHandling.HandledNotificationsNotifier
+    lateinit var handledNotificationsNotifier: NutshellFCMContract.HandledNotificationsNotifier
     lateinit var persistedMessageToNotificationMessageConverter: NutshellFCMContract.Sources.PersistedSource.PersistedMessageToNotificationMessageConverter
     var persistedSource: NutshellFCMContract.Sources.PersistedSource? = null
 
     fun init(application: Application,
              notificationsFactory: NutshellFCMContract.AndroidNotificationsFactory,
-             casesProvider: NutshellFCMContract.NotificationsHandling.CasesProvider,
+             casesProvider: NutshellFCMContract.CasesProvider,
              foregroundServicesBinder: NutshellFCMContract.ForegroundServicesBinder,
              persistentAdapter: PersistentAdapterContract.Adapter?): Boolean {
         val applicationContext = Injections.provideApplicationContext(application)

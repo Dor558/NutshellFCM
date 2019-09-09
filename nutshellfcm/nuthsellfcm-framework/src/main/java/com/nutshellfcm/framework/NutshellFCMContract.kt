@@ -84,28 +84,25 @@ interface NutshellFCMContract {
         fun writeNotification(notificationMessage: NotificationMessage): ScheduledWork<Unit>
     }
 
-    interface NotificationsHandling {
+    interface CasesProvider {
+        val cases: List<Case>
+    }
 
-        interface CasesProvider {
-            val cases: List<Case>
-        }
+    interface CasesManager {
+        fun init()
+        fun hasRemainingCases(): Boolean
+        fun handleNextCase(notifications: List<NotificationMessage>): List<NotificationMessage>
+    }
 
-        interface CasesManager {
-            fun init()
-            fun hasRemainingCases(): Boolean
-            fun handleNextCase(notifications: List<NotificationMessage>): List<NotificationMessage>
-        }
+    interface Case {
 
-        interface Case {
+        val actionIds: List<String>
 
-            val actionIds: List<String>
+        fun consume(caseMessages: List<NotificationMessage>)
+    }
 
-            fun consume(caseMessages: List<NotificationMessage>)
-        }
-
-        interface HandledNotificationsNotifier {
-            val handledNotifications: LiveData<List<NotificationMessage>>
-        }
+    interface HandledNotificationsNotifier {
+        val handledNotifications: LiveData<List<NotificationMessage>>
     }
 
     interface NotificationsConsumer {

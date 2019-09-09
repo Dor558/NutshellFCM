@@ -3,7 +3,7 @@ package com.nutshellfcm.framework
 import com.nutshellfcm.framework.model.NotificationMessage
 
 
-internal class CleanupCase : NutshellFCMContract.NotificationsHandling.Case {
+internal class CleanupCase : NutshellFCMContract.Case {
 
     override val actionIds: List<String> = emptyList()
 

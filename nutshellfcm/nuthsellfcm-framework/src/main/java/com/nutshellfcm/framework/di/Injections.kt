@@ -48,12 +48,13 @@ internal object Injections {
         return NotificationsRepository(notificationsInteractor)
     }
 
-    fun provideNotificationsHanlder(): NutshellFCMContract.NotificationsHandling.HandledNotificationsNotifier {
+    fun provideNotificationsHanlder(): NutshellFCMContract.HandledNotificationsNotifier {
         return NutshellNotificationHandler
     }
 
-    fun provideCaseManager(casesProvider: NutshellFCMContract.NotificationsHandling.CasesProvider,
-                           handledNotificationsNotifier: NutshellFCMContract.NotificationsHandling.HandledNotificationsNotifier): NutshellFCMContract.NotificationsHandling.CasesManager {
+    fun provideCaseManager(casesProvider: NutshellFCMContract.CasesProvider,
+                           handledNotificationsNotifier: NutshellFCMContract.HandledNotificationsNotifier
+    ): NutshellFCMContract.CasesManager {
         return NotificationCasesManager(casesProvider, handledNotificationsNotifier)
     }
 
@@ -62,7 +63,7 @@ internal object Injections {
         notificationManager: NotificationManager,
         foregroundServicesBinder: NutshellFCMContract.ForegroundServicesBinder,
         notificationsRepository: NutshellFCMContract.Repository,
-        casesManager: NutshellFCMContract.NotificationsHandling.CasesManager
+        casesManager: NutshellFCMContract.CasesManager
     ): NutshellFCMContract.NotificationsConsumer {
         return NotificationsConsumer(
             applicationContext,

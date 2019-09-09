@@ -1,12 +1,13 @@
 package com.nutshellfcm.framework
 
 import androidx.lifecycle.MutableLiveData
-import com.nutshellfcm.framework.NutshellFCMContract.NotificationsHandling.Case
+import com.nutshellfcm.framework.NutshellFCMContract.Case
 import com.nutshellfcm.framework.model.NotificationMessage
 
-internal class NotificationCasesManager(private val casesProvider: NutshellFCMContract.NotificationsHandling.CasesProvider,
-                                        private val handledNotificationsNotifier: NutshellFCMContract.NotificationsHandling.HandledNotificationsNotifier):
-    NutshellFCMContract.NotificationsHandling.CasesManager {
+internal class NotificationCasesManager(private val casesProvider: NutshellFCMContract.CasesProvider,
+                                        private val handledNotificationsNotifier: NutshellFCMContract.HandledNotificationsNotifier
+):
+    NutshellFCMContract.CasesManager {
 
     private var iterator: Iterator<Case>? = null
 
