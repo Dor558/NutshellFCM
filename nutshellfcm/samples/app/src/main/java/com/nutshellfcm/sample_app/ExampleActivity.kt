@@ -3,7 +3,7 @@ package com.nutshellfcm.sample_app
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.nutshellfcm.framework.LocalMessagesNotifier
+import com.nutshellfcm.framework.NutshellLocalMessagesNotifier
 import com.nutshellfcm.framework.NutshellFCMContract
 import com.nutshellfcm.framework.NutshellNotificationHandler
 import com.nutshellfcm.framework.model.NotificationMessage
@@ -26,13 +26,13 @@ class ExampleActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        LocalMessagesNotifier.notifyDismiss("Action 4")
+        NutshellLocalMessagesNotifier.notifyDismiss("Action 4")
     }
 
 
     override fun onPause() {
         super.onPause()
-        LocalMessagesNotifier.notify(
+        NutshellLocalMessagesNotifier.notify(
             NotificationMessage(
                 "Action 4",
                 NutshellFCMContract.NotificationType.FOREGROUND_NOTIFICATION
